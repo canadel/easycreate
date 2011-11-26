@@ -1,0 +1,2 @@
+module InwxHelper
+end
