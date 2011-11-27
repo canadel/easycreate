@@ -1,11 +1,15 @@
+require "#{Rails.root}/lib/external/Domrobot.rb"
+
 class InwxController < ApplicationController
-  require 'lib/external/Domrobot'
+  
 
-   def index
+  before_filter :authenticate_user!
 
-   end
+  def index
 
-   def get_domains
+  end
+
+  def get_domains
     addr = "api.domrobot.com"
     user = "tschulz"
     pass = "Markus1979"
@@ -17,8 +21,8 @@ class InwxController < ApplicationController
      
      
     result = domrobot.call('domain', 'list')
-      puts YAML::dump(result)
+    puts YAML::dump(result)
     
-   end
+  end
    
 end
