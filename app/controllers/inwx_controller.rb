@@ -10,6 +10,11 @@ class InwxController < ApplicationController
   end
 
   def get_domains
+    if current_user.inwx_credential.blank?
+      flash.now.alert = "Please setup your inwx credentials first!"
+    end
+    
+    
     addr = "api.domrobot.com"
     user = "tschulz"
     pass = "Markus1979"
@@ -24,5 +29,6 @@ class InwxController < ApplicationController
     puts YAML::dump(result)
     
   end
+  
    
 end

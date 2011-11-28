@@ -1,4 +1,6 @@
 DumboEasyCreate::Application.routes.draw do
+  get "inwx_credentials/index"
+
   devise_for :users
 
   # The priority is based upon order of creation:
