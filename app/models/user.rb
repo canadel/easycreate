@@ -10,4 +10,12 @@ class User < ActiveRecord::Base
   has_one  :inwx_credential, :dependent => :destroy
   has_many :inwx_domains, :dependent => :destroy
   
+  after_create :add_emtpy_inwx_credential
+  
+  private
+  
+  def add_emtpy_inwx_credential
+    self.inwx_credential = InwxCredential.new
+  end
+  
 end

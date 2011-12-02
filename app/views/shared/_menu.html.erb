@@ -1,0 +1,5 @@
+<% unless current_user.blank?  %>
+  <%= link_to "Edit my INWX Credentials", edit_user_inwx_credential_path(current_user.id,current_user.inwx_credential.id) %>
+   - 
+  <%= link_to "Logout", destroy_user_session_path %>
+<% end %>
