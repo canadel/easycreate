@@ -1,0 +1,1 @@
+ENV['INWX_DOMROBOT'] = "api.domrobot.com"

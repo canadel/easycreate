@@ -13,9 +13,7 @@ DumboEasyCreate::Application.routes.draw do
     end
   end
   
-  resources :users do
-    resources :inwx_credentials
-  end
+  resources :inwx_credentials
   
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

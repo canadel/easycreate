@@ -10,20 +10,28 @@ class InwxController < ApplicationController
   end
 
   def get_domains
-    # if current_user.inwx_credential.username.empty? || current_user.inwx_credential.password.empty?
+    if current_user.inwx_credential.username.empty? || current_user.inwx_credential.password.empty?
       flash[:error] = "Please setup your inwx credentials first!"
-    # end
+    end
     
     
-    # addr = "api.domrobot.com"
-    #     user = "tschulz"
-    #     pass = "Markus1979"
-    # 
-    #     domrobot = INWX::Domrobot.new(addr)
-    # 
-    #     result = domrobot.login(user,pass)
-    #     puts YAML::dump(result)
-    #      
+    
+    domrobot = INWX::Domrobot.new(ENV['INWX_DOMROBOT'])
+    
+    begin
+      domrobot.login( current_user.inwx_credential.username, current_user.inwx_credential.password)
+      @domains = domrobot.call('domain','list')
+      
+    rescue Exception => e
+      flash[:error] = "Could not connect, please check you credentials!"
+    end
+
+    @domains['resData']['domain'].each do |d|
+      current_user.inwx_domains << InwxDomain.new(:domain => d['domain'])
+    end
+    
+    # puts YAML::dump(result)
+         
     #      
     #     result = domrobot.call('domain', 'list')
     #     puts YAML::dump(result)
