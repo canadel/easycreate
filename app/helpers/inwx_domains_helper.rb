@@ -1,0 +1,2 @@
+module InwxDomainsHelper
+end

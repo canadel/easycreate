@@ -33,12 +33,23 @@ class InwxController < ApplicationController
     end
     current_user.inwx_domains = @temp
     
-    # puts YAML::dump(result)
-         
-    #      
-    #     result = domrobot.call('domain', 'list')
-    #     puts YAML::dump(result)
+  end
+  
+  def update_domains
     
+    domrobot = INWX::Domrobot.new(ENV['INWX_DOMROBOT'])
+
+    begin
+      domrobot.login( current_user.inwx_credential.username, current_user.inwx_credential.password)
+      current_user.inwx_domains.each do |d|
+        logger.debug domrobot.call('domain','info', :domain => d.domain)
+        
+      end 
+    rescue Exception => e
+      Rails.logger.debug { e.to_yaml }
+      flash[:error] = "Could not connect, please check you credentials!"
+      render :update_domains
+    end
   end
   
    

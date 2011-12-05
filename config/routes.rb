@@ -1,5 +1,5 @@
 DumboEasyCreate::Application.routes.draw do
-  get "inwx_domain/index"
+  get "inwx_domains/index"
 
   get "inwx_credentials/index"
 
@@ -12,6 +12,7 @@ DumboEasyCreate::Application.routes.draw do
   resources 'inwx', :only => :index do
     collection do
       get 'get_domains'
+      get 'update_domains'
     end
   end
   
