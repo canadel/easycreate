@@ -24,11 +24,14 @@ class InwxController < ApplicationController
       
     rescue Exception => e
       flash[:error] = "Could not connect, please check you credentials!"
+      render :get_domains
     end
-
+    
+    @temp = Array.new
     @domains['resData']['domain'].each do |d|
-      current_user.inwx_domains << InwxDomain.new(:domain => d['domain'])
+       @temp.push InwxDomain.new(:domain => d['domain'])
     end
+    current_user.inwx_domains = @temp
     
     # puts YAML::dump(result)
          
