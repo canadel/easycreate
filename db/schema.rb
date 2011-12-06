@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111205211358) do
+ActiveRecord::Schema.define(:version => 20111206100303) do
 
   create_table "a_records", :force => true do |t|
     t.integer  "inwx_domain_id"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20111205211358) do
     t.string   "entry"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   create_table "inwx_credentials", :force => true do |t|

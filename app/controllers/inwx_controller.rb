@@ -41,9 +41,26 @@ class InwxController < ApplicationController
 
     begin
       domrobot.login( current_user.inwx_credential.username, current_user.inwx_credential.password)
+      
       current_user.inwx_domains.each do |d|
-        logger.debug domrobot.call('domain','info', :domain => d.domain)
-        
+        @extracted_a_records = Array.new
+        @extracted_cname_records = Array.new
+        @a_records = domrobot.call('nameserver','info', {:domain => d.domain, :type => 'A'})
+        @cname_records = domrobot.call('nameserver','info', {:domain => d.domain, :type => 'CNAME'})
+        #  extracting A Records
+        unless @a_records['resData'].blank?
+          @a_records['resData']['record'].each do |r|
+            @extracted_a_records << ARecord.new(:entry => r['content'])
+          end
+        end
+        #  extracting CNAME Records
+        unless @cname_records['resData'].blank?
+          @cname_records['resData']['record'].each do |r|
+            Rails.logger.debug { r.to_yaml }
+            @extracted_cname_records << CnameRecord.new(:entry => r['content'], :name => r['name'])
+          end
+        end
+        d.cname_records = @extracted_cname_records unless @extracted_cname_records.blank?
       end 
     rescue Exception => e
       Rails.logger.debug { e.to_yaml }
