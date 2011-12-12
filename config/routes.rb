@@ -1,5 +1,8 @@
 DumboEasyCreate::Application.routes.draw do
   get "inwx_domains/index"
+  get "inwx_domains/:id/activate_dumbo" => "inwx_domains#activate_dumbo", :as => "activate_dumbo"
+  match "inwx_domains/:id/deactivate_dumbo" => "inwx_domains#deactivate_dumbo", :as => "deactivate_dumbo"
+  
 
   get "inwx_credentials/index"
 

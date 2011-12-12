@@ -5,4 +5,11 @@
     <td>
       <%= domain.dumbo_state %>
     </td>
+    <td>
+      <% if domain.dumbo_binary_state %>
+        <%= link_to "deactivate Dumbo for this domain", deactivate_dumbo_path(domain) %>
+      <% else %>
+        <%= link_to "activate Dumbo for this domain", activate_dumbo_path(domain) %>
+      <% end %>
+    </td>
   </tr>
