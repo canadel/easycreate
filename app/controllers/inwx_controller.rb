@@ -20,7 +20,7 @@ class InwxController < ApplicationController
     
     begin
       domrobot.login( current_user.inwx_credential.username, current_user.inwx_credential.password)
-      @domains = domrobot.call('domain','list')
+      @domains = domrobot.call('domain','list',{ :pagelimit => 100000})
       
     rescue Exception => e
       flash[:error] = "Could not connect, please check you credentials!"

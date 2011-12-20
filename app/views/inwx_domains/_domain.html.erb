@@ -7,9 +7,9 @@
     </td>
     <td>
       <% if domain.dumbo_binary_state %>
-        <%= link_to "deactivate Dumbo for this domain", deactivate_dumbo_path(domain) %>
+        <%= link_to "deactivate Dumbo for this domain", deactivate_dumbo_path(domain), :remote => true %>
       <% else %>
-        <%= link_to "activate Dumbo for this domain", activate_dumbo_path(domain) %>
+        <%= link_to "activate Dumbo for this domain", activate_dumbo_path(domain), :remote => true %>
       <% end %>
     </td>
   </tr>
