@@ -50,13 +50,13 @@ class InwxController < ApplicationController
         #  extracting A Records
         unless @a_records['resData'].blank?
           @a_records['resData']['record'].each do |r|
-            @extracted_a_records << ARecord.new(:entry => r['content'])
+            @extracted_a_records << ARecord.new(:entry => r['content'], :name => r['name'])
           end
         end
+        d.a_records = @extracted_a_records unless @extracted_a_records.blank?
         #  extracting CNAME Records
         unless @cname_records['resData'].blank?
           @cname_records['resData']['record'].each do |r|
-            Rails.logger.debug { r.to_yaml }
             @extracted_cname_records << CnameRecord.new(:entry => r['content'], :name => r['name'])
           end
         end

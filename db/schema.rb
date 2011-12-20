@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111206100303) do
+ActiveRecord::Schema.define(:version => 20111220153828) do
 
   create_table "a_records", :force => true do |t|
     t.integer  "inwx_domain_id"
     t.string   "entry"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   create_table "cname_records", :force => true do |t|
