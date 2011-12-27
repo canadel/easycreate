@@ -5,7 +5,7 @@ class InwxDomain < ActiveRecord::Base
   has_many  :cname_records, :dependent => :destroy
   
   def dumbo_state
-    if self.a_records.where(:entry => "184.106.177.132").exists? && self.cname_records.where(:entry => self.domain, :name => "www")
+    if dumbo_binary_state
       "Dumbo activated"
     else
       "Dumbo not activated"
@@ -13,7 +13,7 @@ class InwxDomain < ActiveRecord::Base
   end
   
   def dumbo_binary_state
-    if self.a_records.where(:entry => "184.106.177.132").exists? && self.cname_records.where(:entry => self.domain, :name => "www")
+    if self.a_records.where(:entry => ENV['DUMBO_IP'], :name  => self.domain).exists? && self.cname_records.where(:entry => self.domain, :name => "www.#{self.domain}").exists?
       true
     else
       false
