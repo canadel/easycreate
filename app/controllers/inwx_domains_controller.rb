@@ -120,30 +120,34 @@ class InwxDomainsController < ApplicationController
     end
   end
   
-  def get_domains
-    if current_user.inwx_credential.username.empty? || current_user.inwx_credential.password.empty?
-      flash[:error] = "Please setup your inwx credentials first!"
-    end
+  def get_domains(update_view = params[:update_view])
+    respond_to do |format|
+      format.js do
+        if current_user.inwx_credential.username.empty? || current_user.inwx_credential.password.empty?
+          flash[:error] = "Please setup your inwx credentials first!"
+        end
     
-    domrobot = INWX::Domrobot.new(ENV['INWX_DOMROBOT'])
+        domrobot = INWX::Domrobot.new(ENV['INWX_DOMROBOT'])
     
-    begin
-      domrobot.login( current_user.inwx_credential.username, current_user.inwx_credential.password)
-      @domains = domrobot.call('domain','list',{ :pagelimit => 100000})
+        begin
+          domrobot.login( current_user.inwx_credential.username, current_user.inwx_credential.password)
+          @domains = domrobot.call('domain','list',{ :pagelimit => 100000})
       
-    rescue Exception => e
-      flash[:error] = "Could not connect, please check you credentials!"
-      render :get_domains
-    end
+        rescue Exception => e
+          flash[:error] = "Could not connect, please check you credentials!"
+          render :get_domains
+        end
     
-    @temp = Array.new
-    @domains['resData']['domain'].each do |d|
-       @temp.push InwxDomain.new(:domain => d['domain'])
-    end
+        @temp = Array.new
+        @domains['resData']['domain'].each do |d|
+           @temp.push InwxDomain.new(:domain => d['domain'])
+        end
     
-    if update_view
-      current_user.inwx_domains = @temp
-      render :update_domains
+        if update_view
+          current_user.inwx_domains = @temp
+          render :update_domains
+        end
+      end
     end
   end
   
