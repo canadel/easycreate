@@ -1,10 +1,10 @@
 DumboEasyCreate::Application.routes.draw do
-  get "inwx_domains/index"
-  get "inwx_domains/:id/activate_dumbo" => "inwx_domains#activate_dumbo", :as => "activate_dumbo"
-  match "inwx_domains/:id/deactivate_dumbo" => "inwx_domains#deactivate_dumbo", :as => "deactivate_dumbo"
+  # get "inwx_domains/index"
+  # get "inwx_domains/:id/activate_dumbo" => "inwx_domains#activate_dumbo", :as => "activate_dumbo"
+  # get "inwx_domains/:id/deactivate_dumbo" => "inwx_domains#deactivate_dumbo", :as => "deactivate_dumbo"
   
 
-  get "inwx_credentials/index"
+  # get "inwx_credentials/index"
 
   devise_for :users
 
@@ -12,14 +12,27 @@ DumboEasyCreate::Application.routes.draw do
   # first created -> highest priority.
 
   
-  resources 'inwx', :only => :index do
+  # resources 'inwx', :only => :index do
+  #   collection do
+  #     get 'get_domains'
+  #     get 'update_domains'
+  #     get 'update_domain/:id' => "inwx#update_domain", :as => :update_domain
+  #   end
+  # end
+  
+  resources :inwx_domains, :as => 'domains' do
+    get 'activate_dumbo'
+    get 'deactivate_dumbo'
+    get 'update_domain', :as => 'update'
     collection do
-      get 'get_domains'
-      get 'update_domains'
+      get 'update_domains', :as => 'update_all'
     end
   end
   
-  resources :inwx_credentials
+  scope 'inwx' do
+    resources :inwx_credentials, :as => 'credentials'
+  end
+  
   
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
@@ -75,5 +88,5 @@ DumboEasyCreate::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
   
-  root :to => "inwx#index"
+  root :to => "landing_page#index"
 end
