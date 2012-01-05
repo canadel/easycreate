@@ -144,7 +144,7 @@ class InwxDomainsController < ApplicationController
         end
     
         @domains = current_user.inwx_domains
-        render :update_domains
+        render 'update_domains.js.coffee'
         
       end
     end
