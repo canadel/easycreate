@@ -9,4 +9,5 @@
       <%= render :partial => 'domain', :collection => @domains %>
   </table>
 </div>
+<%= link_to t(:get_domains), get_domains_inwx_index_path, :remote => true %>
 <%= link_to "Update status for all Domains", update_all_domains_path, :remote => true %>
