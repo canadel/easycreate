@@ -23,8 +23,14 @@ class InwxDomainsController < ApplicationController
                           }
                        )
         end
+<<<<<<< HEAD
+      else 
+        domrobot.call('nameserver','createRecord', {:domain => domain.domain, :type => 'A', :content => '184.106.177.132', :name => ''})
+        Rails.logger.debug { "DEBUG: we created #{domain.domain} A Record" }
+=======
       else
         domrobot.call('nameserver','createRecord', {:domain => domain.domain, :type => 'A', :content => ENV['DUMBO_IP'], :name => ''})
+>>>>>>> fa1c90b60b370debabe835f3d0e60deb4ad8cb7b
       end
  
       if current_user.inwx_domains.find(domain).cname_records.where(:name => "www.#{domain.domain}").exists?
@@ -121,32 +127,29 @@ class InwxDomainsController < ApplicationController
   end
   
   def get_domains
-    respond_to do |format|
-      format.js do
-        if current_user.inwx_credential.username.empty? || current_user.inwx_credential.password.empty?
-          flash[:error] = "Please setup your inwx credentials first!"
-        end
+    if current_user.inwx_credential.username.empty? || current_user.inwx_credential.password.empty?
+      flash[:error] = "Please setup your inwx credentials first!"
+    end
     
-        domrobot = INWX::Domrobot.new(ENV['INWX_DOMROBOT'])
+    domrobot = INWX::Domrobot.new(ENV['INWX_DOMROBOT'])
     
-        begin
-          domrobot.login( current_user.inwx_credential.username, current_user.inwx_credential.password)
-          @domains = domrobot.call('domain','list',{ :pagelimit => 100000})
+    begin
+      domrobot.login( current_user.inwx_credential.username, current_user.inwx_credential.password)
+      @domains = domrobot.call('domain','list',{ :pagelimit => 100000})
       
-        rescue Exception => e
-          flash[:error] = "Could not connect, please check you credentials!"
-          render :get_domains
-        end
+    rescue Exception => e
+      flash[:error] = "Could not connect, please check you credentials!"
+      render :get_domains
+    end
     
-        @temp = Array.new
-        @domains['resData']['domain'].each do |d|
-           @temp.push InwxDomain.new(:domain => d['domain'])
-        end
+    @temp = Array.new
+    @domains['resData']['domain'].each do |d|
+       @temp.push InwxDomain.new(:domain => d['domain'])
+    end
     
-        @domains = current_user.inwx_domains
-        render :update_domains
-        
-      end
+    if update_view
+      current_user.inwx_domains = @temp
+      render :update_domains
     end
   end
   

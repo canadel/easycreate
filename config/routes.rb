@@ -26,6 +26,7 @@ DumboEasyCreate::Application.routes.draw do
     get 'update_domain', :as => 'update'
     collection do
       get 'update_domains', :as => 'update_all'
+      get 'get_domains'
     end
   end
   
