@@ -17,7 +17,7 @@ class InwxDomainsController < ApplicationController
           Rails.logger.debug { "DEBUG: we would need to update #{domain.domain} A Record" }
           domrobot.call('nameserver','updateRecord', {:id => domain.a_records.where(:name => "www.#{domain.domain}").first.inwx_id, :content => '184.106.177.132'})
         end
-      else
+      else 
         domrobot.call('nameserver','createRecord', {:domain => domain.domain, :type => 'A', :content => '184.106.177.132', :name => ''})
         Rails.logger.debug { "DEBUG: we created #{domain.domain} A Record" }
       end
