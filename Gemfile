@@ -6,7 +6,6 @@ gem 'rails', '3.1.3'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-gem 'pg'
 
 gem "devise", "~> 1.5.1"
 
@@ -34,4 +33,5 @@ gem 'capistrano'
 # To use debugger
 # gem 'ruby-debug'
 
-gem 'heroku'
+gem 'execjs'
+gem 'therubyracer'
