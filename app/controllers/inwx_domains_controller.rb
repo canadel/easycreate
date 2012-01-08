@@ -97,14 +97,14 @@ class InwxDomainsController < ApplicationController
     #  extracting A Records
     unless @a_records['resData'].blank?
       @a_records['resData']['record'].each do |r|
-        @extracted_a_records << ARecord.new(:entry => r['content'], :name => r['name'], :inwx_id => r['id'])
+        @extracted_a_records << ARecord.new(:entry => r['content'], :name => r['name'], :inwx_id => r['id']) unless r.blank?
       end
     end
     domain.a_records = @extracted_a_records
     #  extracting CNAME Records
     unless @cname_records['resData'].blank?
       @cname_records['resData']['record'].each do |r|
-        @extracted_cname_records << CnameRecord.new(:entry => r['content'], :name => r['name'], :inwx_id => r['id'])
+        @extracted_cname_records << CnameRecord.new(:entry => r['content'], :name => r['name'], :inwx_id => r['id']) unless r.blank?
       end
     end
     domain.cname_records = @extracted_cname_records
