@@ -1,3 +1,5 @@
+require "bundler/capistrano"
+
 set :application, "easycreate"
 set :repository,  "git@dev.time-is-money.org:dumbo_easy_create.git"
 
