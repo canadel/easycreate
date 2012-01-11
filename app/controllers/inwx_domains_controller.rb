@@ -142,6 +142,8 @@ class InwxDomainsController < ApplicationController
         @domains['resData']['domain'].each do |d|
            @temp.push InwxDomain.new(:domain => d['domain'])
         end
+        
+        current_user.inwx_domains = @temp
     
         @domains = current_user.inwx_domains
         render 'update_domains.js.coffee'
