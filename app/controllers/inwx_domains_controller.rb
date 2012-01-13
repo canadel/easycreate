@@ -78,9 +78,10 @@ class InwxDomainsController < ApplicationController
     rescue Exception => e
       Rails.logger.debug { e.to_yaml }
       flash[:error] = "Could not connect, please check you credentials!"
+      @domains = current_user.inwx_domains
       render :update_domains
     end
-    current_user.inwx_domains = @temp
+    @domains = current_user.inwx_domains
   end
   
   
@@ -97,6 +98,7 @@ class InwxDomainsController < ApplicationController
     #  extracting A Records
     unless @a_records['resData'].blank?
       @a_records['resData']['record'].each do |r|
+        Rails.logger.debug { "DEBUG: #{r.to_yaml}" }
         @extracted_a_records << ARecord.new(:entry => r['content'], :name => r['name'], :inwx_id => r['id']) unless r.blank?
       end
     end
