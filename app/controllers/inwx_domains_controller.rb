@@ -12,7 +12,6 @@ class InwxDomainsController < ApplicationController
     
     # begin
       domrobot.login( current_user.inwx_credential.username, current_user.inwx_credential.password)
-      Rails.logger.debug { "Updating Domain: #{domain.domain}" }
       if current_user.inwx_domains.find(domain).a_records.where(:entry => "www.#{domain.domain}").exists?
         unless current_user.inwx_domains.find(domain).a_records.where(:name => "www.#{domain.domain}").first.eql?(ENV['DUMBO_IP'])
           record_id = domain.a_records.where(:name => "#{domain.domain}").first.inwx_id
@@ -28,9 +27,7 @@ class InwxDomainsController < ApplicationController
       end
  
       if current_user.inwx_domains.find(domain).cname_records.where(:name => "www.#{domain.domain}").exists?
-        Rails.logger.debug { "test1" }
         unless current_user.inwx_domains.find(domain).cname_records.where(:name => "www.#{domain.domain}", :entry => domain).exists?
-          Rails.logger.debug { "test2" }
           record_id = domain.cname_records.where(:name => "www.#{domain.domain}").first.inwx_id
           domrobot.call(  'nameserver',
                           'updateRecord',
@@ -41,14 +38,8 @@ class InwxDomainsController < ApplicationController
         end
       else
         domrobot.call('nameserver','createRecord', {:domain => domain.domain, :type => 'CNAME', :content => "#{domain.domain}", :name => 'www'})
-        Rails.logger.debug { "DEBUG: we would need to create #{domain.domain} CNAME Record" }
       end
       redirect_to :action => update_domain, :id => domain.id, :update_view => true
-       # domrobot.call()
-    # rescue Exception => e
-      # Rails.logger.debug { "Error while updating: \n #{e.to_yaml}" }
-      # flash[:error] = "An error happened during processing your request."
-    # end
   end
   
   def deactivate_dumbo
@@ -76,7 +67,6 @@ class InwxDomainsController < ApplicationController
     begin
       current_user.inwx_domains.each { |d| update_domain(d.id) }
     rescue Exception => e
-      Rails.logger.debug { e.to_yaml }
       flash[:error] = "Could not connect, please check you credentials!"
       @domains = current_user.inwx_domains
       render :update_domains
@@ -98,7 +88,6 @@ class InwxDomainsController < ApplicationController
     #  extracting A Records
     unless @a_records['resData'].blank?
       @a_records['resData']['record'].each do |r|
-        Rails.logger.debug { "DEBUG: #{r.to_yaml}" }
         @extracted_a_records << ARecord.new(:entry => r['content'], :name => r['name'], :inwx_id => r['id']) unless r.blank?
       end
     end
@@ -112,7 +101,6 @@ class InwxDomainsController < ApplicationController
     domain.cname_records = @extracted_cname_records
 
     unless update_view.blank?
-      Rails.logger.debug { "DEBUG: rendering" }
         respond_to do |format|
         format.js {
           @domains = current_user.inwx_domains
