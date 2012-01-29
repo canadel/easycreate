@@ -1,7 +1,0 @@
-<% if user_signed_in?  %>
-  <%= link_to "Edit my INWX Credentials", edit_credential_path(current_user.inwx_credential.id) %>
-  - 
-  <%= link_to "My Domains", domains_path %>
-  -
-  <%= link_to "Logout", destroy_user_session_path, :method => :delete %>
-<% end %>

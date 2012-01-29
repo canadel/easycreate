@@ -20,3 +20,14 @@ class InwxDomain < ActiveRecord::Base
     end
   end
 end
+# == Schema Information
+#
+# Table name: inwx_domains
+#
+#  id         :integer         not null, primary key
+#  domain     :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#  user_id    :integer
+#
+

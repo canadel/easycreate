@@ -6,12 +6,21 @@ class InwxCredentialsController < ApplicationController
   end
   
   def edit
-    @inwx_credential = current_user.inwx_credential    
   end
   
   def update
-    current_user.inwx_credential.update_attributes(params[:inwx_credential])
-    redirect_to root_path
+    if resource.update_attributes(params[:inwx_credential])
+      redirect_to root_path, notice: 'INWX credintals updated!'
+    else
+      render :edit
+    end
   end
 
+
+  private
+  def resource
+    @_inwx_credential ||= current_user.inwx_credential
+  end
+
+  helper_method :resource
 end

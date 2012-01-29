@@ -1,0 +1,13 @@
+= twitter_bootstrap_form_for(resource, |
+                     :as   => resource_name, |
+                     :url  => unlock_path(resource_name), :html => { :method => :post }) do |f|
+  = f.inputs 'Resend unlock instructions' do
+
+    = devise_error_messages!
+
+    = f.email_field :email
+
+    = f.actions do
+      = f.submit 'Resend unlock instructions'
+
+= render :partial => "devise/shared/links"

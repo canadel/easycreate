@@ -11,6 +11,13 @@ gem "devise", "~> 1.5.1"
 
 gem 'json'
 
+gem 'haml'
+gem 'haml-rails'
+gem 'kaminari'
+gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails',
+                              :git => 'git://github.com/anjlab/bootstrap-rails.git'
+gem 'twitter_bootstrap_form_for' # https://github.com/stouset/twitter_bootstrap_form_for
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -35,3 +42,15 @@ gem 'capistrano'
 
 gem 'execjs'
 gem 'therubyracer'
+
+group :development do
+  gem 'unicorn'
+  gem 'rails3-generators'
+  gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
+  gem 'pry'
+  gem 'hpricot'
+  gem 'ruby_parser'
+end
+
+
+

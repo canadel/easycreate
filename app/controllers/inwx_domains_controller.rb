@@ -2,19 +2,16 @@ class InwxDomainsController < ApplicationController
   
   before_filter :authenticate_user!
   
-  def index
-    @domains = current_user.inwx_domains
+  def index   
   end
   
   def activate_dumbo
-    domrobot = INWX::Domrobot.new(ENV['INWX_DOMROBOT'])
-    domain = InwxDomain.find(params[:domain_id])
     
     # begin
       domrobot.login( current_user.inwx_credential.username, current_user.inwx_credential.password)
-      if current_user.inwx_domains.find(domain).a_records.where(:entry => "www.#{domain.domain}").exists?
-        unless current_user.inwx_domains.find(domain).a_records.where(:name => "www.#{domain.domain}").first.eql?(ENV['DUMBO_IP'])
-          record_id = domain.a_records.where(:name => "#{domain.domain}").first.inwx_id
+      if current_user.inwx_domains.find(resource).a_records.where(:entry => "www.#{resource.domain}").exists?
+        unless current_user.inwx_domains.find(resource).a_records.where(:name => "www.#{resource.domain}").first.eql?(ENV['DUMBO_IP'])
+          record_id = resource.a_records.where(:name => "#{resource.domain}").first.inwx_id
           domrobot.call(  'nameserver',
                           'updateRecord',
                           { :id => record_id,
@@ -23,10 +20,10 @@ class InwxDomainsController < ApplicationController
                        )
         end
       else
-        domrobot.call('nameserver','createRecord', {:domain => domain.domain, :type => 'A', :content => ENV['DUMBO_IP'], :name => ''})
+        domrobot.call('nameserver','createRecord', {:domain => resource.domain, :type => 'A', :content => ENV['DUMBO_IP'], :name => ''})
       end
  
-      if current_user.inwx_domains.find(domain).cname_records.where(:name => "www.#{domain.domain}").exists?
+      if current_user.inwx_domains.find(resource).cname_records.where(:name => "www.#{resource.domain}").exists?
         unless current_user.inwx_domains.find(domain).cname_records.where(:name => "www.#{domain.domain}", :entry => domain).exists?
           record_id = domain.cname_records.where(:name => "www.#{domain.domain}").first.inwx_id
           domrobot.call(  'nameserver',
@@ -112,10 +109,15 @@ class InwxDomainsController < ApplicationController
   
   def get_domains
     respond_to do |format|
-      format.js do
+
+      format.html do
         if current_user.inwx_credential.username.empty? || current_user.inwx_credential.password.empty?
           flash[:error] = "Please setup your inwx credentials first!"
         end
+      end # .html
+
+      format.js do
+        
     
         domrobot = INWX::Domrobot.new(ENV['INWX_DOMROBOT'])
     
@@ -138,9 +140,28 @@ class InwxDomainsController < ApplicationController
         @domains = current_user.inwx_domains
         render 'update_domains.js.coffee'
         
-      end
+      end # .js
     end
   end
   
+  private
+  # domain api
+  def domrobot
+    @_domrobot ||= INWX::Domrobot.new(ENV['INWX_DOMROBOT'])
+  end
+
+  # domain
+  def resource 
+    @_resource ||= InwxDomain.find(params[:domain_id])  
+  end
+  
+  # user domains
+  def resources 
+    @_resources ||= current_user.inwx_domains
+  end
+
+  helper_method :resource, :resources
 
 end
+
+

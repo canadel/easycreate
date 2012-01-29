@@ -1,0 +1,9 @@
+= twitter_bootstrap_form_for(resource, :url => credential_path, :method => :put) do |f|
+  
+  = f.inputs 'Edit my INWX credintals' do
+
+    = f.text_field :username
+    = f.text_field :password
+    
+    = f.actions do
+      = f.submit 'Save'

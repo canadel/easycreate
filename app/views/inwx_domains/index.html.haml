@@ -1,0 +1,14 @@
+%h1 My InwxDomains
+
+#content
+  %table
+    %tr
+      %th Domain
+      %th Status
+    = render :partial => 'domain', :collection => resources
+
+
+
+= link_to "Get domains", get_domains_domains_path, :remote => true
+|
+= link_to "Update status for all Domains", update_all_domains_path, :remote => true
