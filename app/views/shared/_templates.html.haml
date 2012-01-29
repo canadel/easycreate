@@ -1,0 +1,54 @@
+= twitter_bootstrap_form_for(:resource, :url  => '/') do |f|
+
+  .bordered.topspace20
+    = f.text_field :project_name, class: 'span8' do
+      %span.help-block
+        (e.g. "Example Page" or "Example" or…)
+
+    = f.text_field :domain, class: 'span8' do
+      %span.help-block
+        (e.g. "example.de")
+  
+  .bordered.templates.topspace20
+    %p Choose Template:
+    
+    .row
+      .preview_template.span3
+        =image_tag 'templates/template1.png'  
+        %h4 Blog #1
+        1 Page
+        %br
+        =link_to "+ more info", "#"
+      
+      .preview_template.span3
+        =image_tag 'templates/template2.png'  
+        %h4 Company #A1
+        2 Pages
+        %br
+        =link_to "+ more info", "#"
+
+      .preview_template.span3
+        =image_tag 'templates/template3.png'  
+        %h4 Company #A1.1
+        1 Page
+        %br
+        =link_to "+ more info", "#"
+
+      .preview_template.span3
+        =image_tag 'templates/template4.png'  
+        %h4 Company #C
+        2-6 Pages
+        %br
+        =link_to "+ more info", "#"
+
+      .preview_template.span3
+        =image_tag 'templates/template5.png'  
+        %h4 Portfolio #B1
+        2-6
+        %br
+        =link_to "+ more info", "#"
+
+    .cleanup
+
+  .centered.topspace20
+    = f.submit 'CREATE', class: 'btn large primary'

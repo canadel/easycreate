@@ -1,5 +1,8 @@
 %h1 LandingPage
 
+
+=render 'shared/templates'
+
 -unless current_user
   =link_to 'Sign up', new_user_registration_path
   or
