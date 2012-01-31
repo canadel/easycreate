@@ -43,6 +43,9 @@ gem 'capistrano'
 gem 'execjs'
 gem 'therubyracer'
 
+
+gem 'httparty'
+
 group :development do
   gem 'unicorn'
   gem 'rails3-generators'

@@ -19,3 +19,4 @@ params = { :domain => "mydomain.com" }
 result = domrobot.call(object, method, params)
 
 puts YAML::dump(result)
+
