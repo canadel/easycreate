@@ -1,8 +1,6 @@
 # -*- encoding : utf-8 -*-
 
 #
-# I've updated the API. Shortly, we now have a fully RESTful API for domains and pages.
-#
 # The domains endpoints are:
 # GET /api/v1/domains.json
 # POST /api/v1/domains.json
@@ -36,17 +34,17 @@ require 'pstore'
 module Dumbo
 
 	class API
-    BASE = "http://www.dumbocms.com/api/v1"
+    include HTTParty
+    base_uri "http://www.dumbocms.com/api/v1"
+    # debug_output
 
-    attr_accessor :base_url, :server_response, :cookie
+    attr_accessor :cookie
 
-    def initialize(base_url = Dumbo::API::BASE, options={})
-      @base_url = base_url
+    def initialize(options = {})
       parse_options(options)
     end
 
-
-    # helpers
+    # CRUD operations
     def index
       self.get
     end
@@ -67,7 +65,7 @@ module Dumbo
       self.call(:delete, id)
     end
 
-    private
+    protected
 
     def get id=nil
       self.call(:get, id)
@@ -78,6 +76,7 @@ module Dumbo
     end
 
     def post params={}
+      validate_required_params(params)
       self.call(:post, params)
     end
 
@@ -85,23 +84,28 @@ module Dumbo
       raise NotImplementedError
     end
 
-    def resource_path id=nil
-      if id
-        "#{resource}/#{id}.json"
-      else
-        "#{resource}.json"
+    def required_params
+      raise NotImplementedError
+    end
+
+    def validate_required_params params={}
+      required_params.each do |par|
+        raise ArgumentError unless params.keys.include? par
       end
     end
 
-    def resource_url id=nil
-      File.join(@base_url, resource_path(id))
+    def resource_path id=nil
+      if id
+        "/#{resource}/#{id}.json"
+      else
+        "/#{resource}.json"
+      end
     end
 
-    def call(request=:get, id=nil, params)
+    def call(request=:get, id=nil, params={})
       retries = @timeout_tryout_count
-
       begin
-        result = self.class.send(request, resource_url(id), request_options.merge(params))
+        result = self.class.send(request, resource_path(id), request_options.merge(params))
       rescue Timeout::Error
         if (retries -= 1) > 0
           sleep @timeout_tryout_pause if @timeout_tryout_pause
@@ -111,21 +115,19 @@ module Dumbo
         end
       end
 
-      server_response = {
-        code:    result.code, 
-        message: result.message, 
-        headers: result.headers
-      }
+      if result.code != 200
+        raise StandardError, Net::HTTPResponse::CODE_TO_OBJ[result.code.to_s]
+      end
       
-      save_cookie(server_response[:headers]['set-cookie'])
-      server_response
+      save_cookie(result[:headers]['set-cookie']) if @persist_cookies
+      result
     end
 
 
     def request_options
       headers = if @cookie then {Cookie: @cookie} else {} end
-      headers.merge @credintals
-      headers
+      headers.merge! @credintals
+      {:headers => headers}
     end
 
     #
@@ -137,11 +139,16 @@ module Dumbo
       @timeout_tryout_pause = options.fetch(:try_pause){ 1 }
       @persist_cookies      = options.fetch(:persist_cookies){ false }
       @cookie_filename      = options.fetch(:cookie_filename){ './cookie.pstore' }
-      @credintals           = options[:credintals]
+      @credintals           = options[:credintals] || {}
 
       if @persist_cookies
         @cookie = load_cookie
       end
+
+      if options[:debug]
+        self.class.debug_output
+      end
+
     end
 
     def load_cookie
@@ -165,13 +172,21 @@ module Dumbo
 
   class Pages < Dumbo::API
     private
+    def required_params
+      [:account_id, :name, :title, :template_id, :description, :indexable]
+    end
     def resource
       'pages'
     end
   end # class Pages
 
   class Domains < Dumbo::API
+
     private
+    def required_params
+      [:name, :page_id, :wildcard]
+    end
+
     def resource
       'domains'
     end
@@ -180,5 +195,17 @@ module Dumbo
 end # module Dumbo
 
 
+if __FILE__ == $0
+  require 'pp'
+
+  pages = Dumbo::Pages.new({:credintals=>{'x-auth-key' => '7d74e4f46d6459e4ad7b78beb560c718'}})
+  domains = Dumbo::Domains.new({
+                                :debug => true,
+                                :credintals=>{'x-auth-key' => '7d74e4f46d6459e4ad7b78beb560c718'}})
+
+  #pp pages.index
+  pp domains.show(123)
+
+end
 
 
