@@ -11,12 +11,19 @@ module Dumbo
 	class API
     include HTTParty
     base_uri "http://www.dumbocms.com/api/v1"
-    # debug_output
+    headers 'x-auth-key' => '7d74e4f46d6459e4ad7b78beb560c718'
+    #debug_output
 
     attr_accessor :cookie
 
-    def initialize(options = {})
-      parse_options(options)
+    # GET /index
+    def self.index
+      new(nil).index
+    end
+
+
+    def initialize(id)
+      @id=id
     end
 
     # CRUD operations
@@ -24,7 +31,7 @@ module Dumbo
       self.get
     end
 
-    def show(id)
+    def show(id = @id)
       self.get(id)
     end
 
@@ -32,11 +39,11 @@ module Dumbo
       self.post(params)
     end
 
-    def update(id, params={})
+    def update(id = @id, params={})
       self.put(id, params)
     end
 
-    def delete id
+    def delete id = @id
       self.call(:delete, id)
     end
 
@@ -82,12 +89,12 @@ module Dumbo
     end
 
     def call(request=:get, id=nil, params={})
-      retries = @timeout_tryout_count
+      retries = 3
       begin
-        result = self.class.send(request, resource_path(id), request_options.merge(params))
+        result = self.class.send(request, resource_path(id), params)
       rescue Timeout::Error
         if (retries -= 1) > 0
-          sleep @timeout_tryout_pause if @timeout_tryout_pause
+          sleep 1
           retry 
         else
           raise Timeout::Error
@@ -98,53 +105,7 @@ module Dumbo
         raise StandardError, Net::HTTPResponse::CODE_TO_OBJ[result.code.to_s]
       end
       
-      save_cookie(result[:headers]['set-cookie']) if @persist_cookies
       result
-    end
-
-
-    def request_options
-      headers = if @cookie then {Cookie: @cookie} else {} end
-      headers.merge! @credintals
-      {:headers => headers}
-    end
-
-    #
-    # options[:credintals]
-    #    :x-auth-key => '7d74e4f46d6459e4ad7b78beb560c718'
-    #    or {:user=>'...', :password=>'...'}
-    def parse_options options
-      @timeout_tryout_count = options.fetch(:tries){ 3 }
-      @timeout_tryout_pause = options.fetch(:try_pause){ 1 }
-      @persist_cookies      = options.fetch(:persist_cookies){ false }
-      @cookie_filename      = options.fetch(:cookie_filename){ './cookie.pstore' }
-      @credintals           = options[:credintals] || {}
-
-      if @persist_cookies
-        @cookie = load_cookie
-      end
-
-      if options[:debug] && options[:debug]==true
-        self.class.debug_output
-      end
-
-    end
-
-    def load_cookie
-      return nil unless @persist_cookies && File.exists?(@cookie_filename)
-      ps = PStore.new(@cookie_filename)
-      ps.transaction(true) do
-        ps[:cookie]
-      end
-    end
-
-    def save_cookie cookie
-      return unless @persist_cookies
-      PStore.new(@cookie_filename).tap do |ps|
-        ps.transaction do
-          ps[:cookie] = cookie
-        end
-      end
     end
 
   end # class Dumbo::API

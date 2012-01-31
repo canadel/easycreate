@@ -14,9 +14,25 @@
 # - description
 # - indexable
 require '../dumbo'
+require './category'
+require './document'
+
 module Dumbo
 
   class Page < Dumbo::API
+
+    def initialize(id)
+      @id = id
+    end
+
+    def categories
+      Dumbo::Category.new(@id).index
+    end
+
+    def documents(page_id)
+      raise ArgumentError unless @options
+      Dumbo::Document.new(page_id, @options)
+    end
 
     private
     def required_params
@@ -32,11 +48,14 @@ end # module Dumbo
 if __FILE__ == $0
   require 'pp'
 
-  pages = Dumbo::Page.new({
-                            :debug => true,
-                            :credintals=>{'x-auth-key' => '7d74e4f46d6459e4ad7b78beb560c718'}})
+  pages = Dumbo::Page.index
+  
+#  pp pages
 
-  pp pages.index
+  page = Dumbo::Page.new(15)
+
+  pp page.categories
+
 end
 
 

@@ -13,10 +13,11 @@ module Dumbo
 
   class Category < Dumbo::API
 
-    def initialize(page_id, params={})
+    def initialize(page_id)
       @parent_id = page_id
-      super(params)  
+      super
     end
+
 
     private
     def required_params
