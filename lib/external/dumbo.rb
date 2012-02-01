@@ -4,7 +4,6 @@
 #
 #
 require 'httparty'
-require 'pstore'
 
 module Dumbo
 

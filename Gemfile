@@ -55,5 +55,22 @@ group :development do
   gem 'ruby_parser'
 end
 
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'shoulda-matchers', :require => false
+  gem 'steak'
+  gem 'factory_girl_rails', '>= 1.1.0'
+  gem 'forgery', '0.3.12'
+  gem 'log_buddy'
+end
 
+group :test do
+  # Pretty printed test output
+  gem 'capybara', '>= 1.0.1'
+  gem 'database_cleaner', '>= 0.6.7'
+  gem 'launchy', '>= 2.0.5'
+  gem 'turn', :require => false
+  gem 'webmock'
+  gem 'accept_values_for', git: 'https://github.com/bogdan/accept_values_for.git'
+end
 
