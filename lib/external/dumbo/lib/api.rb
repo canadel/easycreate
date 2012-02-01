@@ -3,15 +3,15 @@
 # Generic API class for work with Dumbo endpoints
 #
 #
-require 'httparty'
 
 module Dumbo
 
-	class API
+  class API
     include HTTParty
     base_uri "http://www.dumbocms.com/api/v1"
     headers 'x-auth-key' => '7d74e4f46d6459e4ad7b78beb560c718'
-    #debug_output
+    format :json
+    #debug_output $stdout
 
     attr_accessor :cookie
 
@@ -110,3 +110,5 @@ module Dumbo
   end # class Dumbo::API
 
 end # module Dumbo
+
+

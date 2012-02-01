@@ -13,9 +13,6 @@
 # - template_id
 # - description
 # - indexable
-require '../dumbo'
-require './category'
-require './document'
 
 module Dumbo
 

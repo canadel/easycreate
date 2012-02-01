@@ -11,7 +11,7 @@
 # - name
 # - page_id
 # - wildcard
-require '../dumbo'
+
 module Dumbo
 
   class Domain < Dumbo::API

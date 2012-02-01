@@ -1,35 +1,33 @@
 # -*- encoding : utf-8 -*-
 
-# The categories endpoints are:
+# The documents endpoints are:
 
-# GET /api/v1/pages/:page_id/categories.json
-# POST /api/v1/pages/:page_id/categories.json
-# GET /api/v1/pages/:page_id/categories/:id.json
-# PUT /api/v1/pages/:page_id/categories/:id.json
-# DELETE /api/v1/pages/:page_id/categories/:id.json
+# GET /api/v1/pages/:page_id/documents.json
+# POST /api/v1/pages/:page_id/documents.json
+# GET /api/v1/pages/:page_id/documents/:id.json
+# PUT /api/v1/pages/:page_id/documents/:id.json
+# DELETE /api/v1/pages/:page_id/documents/:id.json
 
-require '../dumbo'
 module Dumbo
 
-  class Category < Dumbo::API
+  class Document < Dumbo::API
 
-    def initialize(page_id)
+    def initialize(page_id, params={})
       @parent_id = page_id
-      super
+      super(params)  
     end
-
 
     private
     def required_params
       []
     end
     def resource
-      'categories'
+      'documents'
     end
     def parent_resource
       'pages'
     end
-  end # class Category
+  end # class Document
 
 end # module Dumbo
 
@@ -37,14 +35,14 @@ if __FILE__ == $0
   require 'pp'
 
   page_id = 1
-  category = Dumbo::Category.new(
+  document = Dumbo::Document.new(
                             page_id,
                             {
                               :debug => true,
                               :credintals=>{'x-auth-key' => '7d74e4f46d6459e4ad7b78beb560c718'}}
                             )
 
-  pp category.index
+  pp document.index
 end
 
 
