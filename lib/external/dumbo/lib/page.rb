@@ -41,18 +41,3 @@ module Dumbo
   end # class Page
 
 end # module Dumbo
-
-if __FILE__ == $0
-  require 'pp'
-
-  pages = Dumbo::Page.index
-  
-#  pp pages
-
-  page = Dumbo::Page.new(15)
-
-  pp page.categories
-
-end
-
-
