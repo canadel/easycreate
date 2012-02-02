@@ -18,10 +18,6 @@ module Dumbo
 
   class Page < Dumbo::API
 
-    def initialize(id)
-      @id = id
-    end
-
     def categories
       Dumbo::Category.new(@id).index
     end

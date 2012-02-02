@@ -11,17 +11,15 @@ module Dumbo
     base_uri "http://www.dumbocms.com/api/v1"
     headers 'x-auth-key' => '7d74e4f46d6459e4ad7b78beb560c718'
     format :json
-    #debug_output $stdout
-
-    attr_accessor :cookie
+    debug_output $stdout
 
     # GET /index
     def self.index
-      new(nil).index
+      new.index
     end
 
 
-    def initialize(id)
+    def initialize(id=nil)
       @id=id
     end
 
@@ -30,30 +28,31 @@ module Dumbo
       self.get
     end
 
-    def show(id = @id)
-      self.get(id)
+    def show
+      self.get
     end
 
     def create params={}
-      self.post(params)
+      validate_required_params(params)
+      self.call(:post, params)
     end
 
-    def update(id = @id, params={})
-      self.put(id, params)
+    def update(params={})
+      self.put(params)
     end
 
-    def delete id = @id
-      self.call(:delete, id)
+    def delete
+      self.call(:delete)
     end
 
     protected
 
-    def get id=nil
-      self.call(:get, id)
+    def get
+      self.call(:get)
     end
 
-    def put id, params={}
-      self.call(:put, id, params)
+    def put params={}
+      self.call(:put, params)
     end
 
     def post params={}
@@ -71,26 +70,27 @@ module Dumbo
 
     def validate_required_params params={}
       required_params.each do |par|
-        raise ArgumentError unless params.keys.include? par
+        raise ArgumentError unless params.keys.include? par.to_s
       end
     end
 
-    def resource_path id=nil
-      path = if id
-                "/#{resource}/#{id}.json"
-              else
-                "/#{resource}.json"
-              end
+    def id_to_slashed_string
+      @id ? '/'+@id.to_s : ''
+    end
+
+    def resource_path
+      path = "/#{resource}#{id_to_slashed_string}.json"
       if @parent_id
         path = "/#{parent_resource}/#{@parent_id}#{path}"
       end
       path
     end
 
-    def call(request=:get, id=nil, params={})
+    def call(request=:get, params={})
       retries = 3
+      body = params.any? ? {body: params} : {}
       begin
-        result = self.class.send(request, resource_path(id), params)
+        result = self.class.send(request, resource_path, body)
       rescue Timeout::Error
         if (retries -= 1) > 0
           sleep 1

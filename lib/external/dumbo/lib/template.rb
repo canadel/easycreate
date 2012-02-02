@@ -8,7 +8,6 @@
 # PUT /api/v1/templates/:id.json
 # DELETE /api/v1/templates/:id.json
 
-require '../dumbo'
 
 module Dumbo
 
