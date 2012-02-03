@@ -27,4 +27,4 @@ describe Dumbo::Category do
   let(:parent_resource)             { 'pages' }
 
 
-end # Dumbo::API
+end # Dumbo::Category

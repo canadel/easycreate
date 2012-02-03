@@ -12,9 +12,9 @@ module Dumbo
 
   class Category < Dumbo::API
 
-    def initialize(page_id)
-      @parent_id = page_id
-      super
+    def initialize(parent_id)
+      @parent_id = parent_id
+      super()
     end
 
 

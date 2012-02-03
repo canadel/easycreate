@@ -22,9 +22,8 @@ module Dumbo
       Dumbo::Category.new(@id).index
     end
 
-    def documents(page_id)
-      raise ArgumentError unless @options
-      Dumbo::Document.new(page_id, @options)
+    def documents
+      Dumbo::Document.new(@id).index
     end
 
     private
