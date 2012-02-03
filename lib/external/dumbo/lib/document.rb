@@ -21,28 +21,15 @@ module Dumbo
     def required_params
       []
     end
+
     def resource
       'documents'
     end
+
     def parent_resource
       'pages'
     end
+    
   end # class Document
 
 end # module Dumbo
-
-if __FILE__ == $0
-  require 'pp'
-
-  page_id = 1
-  document = Dumbo::Document.new(
-                            page_id,
-                            {
-                              :debug => true,
-                              :credintals=>{'x-auth-key' => '7d74e4f46d6459e4ad7b78beb560c718'}}
-                            )
-
-  pp document.index
-end
-
-

@@ -31,9 +31,11 @@ module Dumbo
     def required_params
       [:account_id, :name, :title, :template_id, :description, :indexable]
     end
+
     def resource
       'pages'
     end
+    
   end # class Page
 
 end # module Dumbo

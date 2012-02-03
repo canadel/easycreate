@@ -9,4 +9,3 @@ module Dumbo
   autoload :Template, 'dumbo/lib/template'
 
 end # Dumbo
-

@@ -17,10 +17,11 @@ module Dumbo
     def required_params
       [:name, :account_id, :content]
     end
+
     def resource
       'templates'
     end
+    
   end # class Page
 
 end # module Dumbo
-

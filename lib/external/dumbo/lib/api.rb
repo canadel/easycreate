@@ -64,6 +64,10 @@ module Dumbo
       raise NotImplementedError
     end
 
+    def parent_resource
+      raise NotImplementedError
+    end
+
     def required_params
       raise NotImplementedError
     end

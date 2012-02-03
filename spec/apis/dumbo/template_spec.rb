@@ -9,14 +9,14 @@ require 'pp'
 describe Dumbo::Template do 
 
   let(:record) do
-    { "name"=>"ahoy_index.html",
-      "account_id"=>2,
-      "content"=> ""}
+    { "name"        => "ahoy_index.html",
+      "account_id"  => 2,
+      "content"     => "" }
   end
 
   let(:invalid_record) do
-    { "account_id"=>2,
-      "content"=> nil }
+    { "account_id"  => 2,
+      "content"     => nil }
   end
 
   let(:records) do
