@@ -15,7 +15,7 @@ module Dumbo
 
     private
     def required_params
-      []
+      [:name, :account_id, :content]
     end
     def resource
       'templates'
@@ -23,15 +23,4 @@ module Dumbo
   end # class Page
 
 end # module Dumbo
-
-if __FILE__ == $0
-  require 'pp'
-
-  templates = Dumbo::Template.new({
-                            :debug => false,
-                            :credintals=>{'x-auth-key' => '7d74e4f46d6459e4ad7b78beb560c718'}})
-
-  pp templates.index.count
-end
-
 

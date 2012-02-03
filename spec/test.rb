@@ -12,9 +12,9 @@ require File.join(APP_ROOT, "lib/external/dumbo/dumbo.rb")
 
 require 'pp'
 
-#pages = Dumbo::Page.index
+pages = Dumbo::Template.index
   
-#pp pages
+pp pages
 
-pp page = Dumbo::Domain.new(1500).show
+# pp page = Dumbo::Template.new(1500).show
 
