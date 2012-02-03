@@ -16,5 +16,5 @@ require 'pp'
   
 #pp pages
 
-pp page = Dumbo::Page.new(1500).show
+pp page = Dumbo::Domain.new(1500).show
 
