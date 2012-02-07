@@ -26,6 +26,10 @@ DumboEasyCreate::Application.configure do
   config.serve_static_assets = false
   config.assets.compress = true
   config.assets.compile = true
+  
+  # heroku http://devcenter.heroku.com/articles/rails31_heroku_cedar
+  config.assets.initialize_on_precompile = false 
+  config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
   # Expands the lines which load the assets
   config.assets.debug = false

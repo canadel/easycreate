@@ -30,11 +30,10 @@ gem 'jquery-rails'
 
 
 # Deploy with Capistrano
-gem 'capistrano'
-
+#gem 'capistrano'
 
 gem 'execjs'
-gem 'therubyracer'
+#gem 'therubyracer'
 
 gem 'httparty'
 
