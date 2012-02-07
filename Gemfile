@@ -33,7 +33,7 @@ gem 'jquery-rails'
 #gem 'capistrano'
 
 gem 'execjs'
-#gem 'therubyracer'
+gem 'therubyracer'
 
 gem 'httparty'
 
