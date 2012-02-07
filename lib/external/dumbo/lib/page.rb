@@ -22,8 +22,16 @@ module Dumbo
       Dumbo::Category.new(@id).index
     end
 
+    def category(id)
+      Dumbo::Category.new(@id, id)
+    end
+
     def documents
       Dumbo::Document.new(@id).index
+    end
+
+    def document(id)
+      Dumbo::Document.new(@id, id)
     end
 
     private

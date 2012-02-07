@@ -6,13 +6,20 @@ describe Dumbo::Category do
 
 
   let(:record) do
+    { "slug"    => "ebike-aktuele-news", 
+      "name"    => "ebike-aktuele-news", 
+      "page_id" => 1 }
   end
 
   let(:invalid_record) do
+    { "slug"    => "ebike-aktuele-news", 
+      "name"    => "ebike-aktuele-news", 
+      "page_id" => nil }
   end
 
   let(:records) do
    [
+      record
     ] 
   end
 
@@ -25,6 +32,10 @@ describe Dumbo::Category do
   let(:non_exist_parent_resource_id){ 999999  }
   let(:exist_parent_resource_id)    { 1       }
   let(:parent_resource)             { 'pages' }
+
+
+
+
 
 
 end # Dumbo::Category

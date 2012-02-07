@@ -12,9 +12,8 @@ require File.join(APP_ROOT, "lib/external/dumbo/dumbo.rb")
 
 require 'pp'
 
-pages = Dumbo::Template.index
-  
-pp pages
+page = Dumbo::Page.new(135) 
+pp page.categories
 
-# pp page = Dumbo::Template.new(1500).show
-
+#page = Dumbo::Page.new(197) 
+#pp page.documents

@@ -11,7 +11,7 @@ module Dumbo
     base_uri "http://www.dumbocms.com/api/v1"
     headers 'x-auth-key' => '7d74e4f46d6459e4ad7b78beb560c718'
     format :json
-    debug_output $stdout
+    #debug_output $stdout
 
     # GET /index
     def self.index

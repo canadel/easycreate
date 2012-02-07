@@ -28,28 +28,24 @@ end
 
 gem 'jquery-rails'
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the web server
-# gem 'unicorn'
 
 # Deploy with Capistrano
 gem 'capistrano'
 
-# To use debugger
-# gem 'ruby-debug'
 
 gem 'execjs'
 gem 'therubyracer'
 
-
 gem 'httparty'
 
-gem 'pg'
-gem 'sqlite3'
+gem 'heroku'
+
+group :production do
+  gem 'pg'
+end
 
 group :development do
+  gem 'sqlite3'
   gem 'unicorn'
   gem 'rails3-generators'
   gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'

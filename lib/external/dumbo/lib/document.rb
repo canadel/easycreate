@@ -12,9 +12,9 @@ module Dumbo
 
   class Document < Dumbo::API
 
-    def initialize(parent_id)
+    def initialize(parent_id, id=nil)
       @parent_id = parent_id
-      super()  
+      super(id)
     end
 
     private
