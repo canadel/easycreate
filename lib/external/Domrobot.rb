@@ -26,7 +26,7 @@ module INWX
     
     def setCookie(cookie)
       self.cookie = cookie
-      fp = File.new("domrobot.tmp", "w")
+      fp = File.new("#{Rails.root}/tmp/domrobot.tmp", "w")
       fp.write(cookie)
       fp.close
     end
@@ -35,8 +35,8 @@ module INWX
       if self.cookie.length > 2
         return self.cookie
       end
-      if File.exist?("domrobot.tmp")
-        fp = File.new("domrobot.tmp", "r")
+      if File.exist?("#{Rails.root}/tmp/domrobot.tmp")
+        fp = File.new("#{Rails.root}/tmp/domrobot.tmp", "r")
         cookie = fp.read()
         fp.close
         return cookie

@@ -2,12 +2,13 @@
 
 #content
   %table
-    %tr
-      %th Domain
-      %th Status
-    = render :partial => 'domain', :collection => resources
-
-
+    %thead
+      %tr
+        %th Domain
+        %th Status
+        %th{ :colspan => 2 } Actions
+    %tbody{ :id => 'dlist' }
+      = render :partial => 'domain', :collection => resources
 
 = link_to "Get domains", get_domains_domains_path, :remote => true
 |

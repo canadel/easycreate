@@ -2,7 +2,7 @@ class InwxCredential < ActiveRecord::Base
   
   belongs_to :user
 
-  validates :username, :password, :presence => true
+  # validates :username, :password, :presence => true
   
 end
 # == Schema Information
