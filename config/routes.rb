@@ -11,7 +11,8 @@ DumboEasyCreate::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
-  
+  get 'pages' => 'pages#index'
+
   # resources 'inwx', :only => :index do
   #   collection do
   #     get 'get_domains'
@@ -33,7 +34,8 @@ DumboEasyCreate::Application.routes.draw do
   scope 'inwx' do
     resources :inwx_credentials, :as => 'credentials'
   end
-  
+ 
+
   
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
