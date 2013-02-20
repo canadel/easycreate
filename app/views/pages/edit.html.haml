@@ -1,0 +1,14 @@
+#content
+  #page-form-status
+    Loading...
+  #page-form{ :style => 'display: none', :data => { :api => api_url('pages', params[:id]), :token => api_token } }
+    = twitter_bootstrap_form_for 'page' do |f|
+      = f.inputs 'Edit my page' do
+        = f.text_field :title
+        = f.text_field :description
+
+        = f.actions do
+          = f.submit 'Update', :id => 'submit'
+
+= javascript_include_tag 'pages_edit'
+

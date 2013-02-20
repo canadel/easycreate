@@ -1,14 +1,15 @@
 %h1 My Pages
 
-#pages-info
-  Loading...
-#pages-content{ :data => { :url => "http://dumbocms.com/api/v1/pages?token=#{@api_key}&callback=?" } }
-  %table{ :style => 'display: none' }
+#content
+  #page-list-status
+    Loading...
+  %table#page-list{ :style => 'display: none', :data => { :api => api_url('pages'), :params => api_params, :edit => pages_path } }
     %thead
       %tr
         %th Name
         %th Title
         %th Description
+        %th Actions
     %tbody
 
-= javascript_include_tag 'pages'
+= javascript_include_tag 'pages_index'
