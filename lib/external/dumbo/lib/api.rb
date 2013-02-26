@@ -8,19 +8,27 @@ module Dumbo
 
   class API
     include HTTParty
-    base_uri "http://www.dumbocms.com/api/v1"
-    headers 'x-auth-key' => '7d74e4f46d6459e4ad7b78beb560c718'
+    base_uri "http://dumbocms.com/api"
+    #headers 'x-auth-key' => '7d74e4f46d6459e4ad7b78beb560c718'
     format :json
     #debug_output $stdout
+
+    def self.setup_httparty(opts)
+      format opts[:format].to_sym do
+        headers 'Accept' => opts[:format_header]
+        headers 'Content-Type' => opts[:format_header]
+      end
+    end
 
     # GET /index
     def self.index
       new.index
     end
 
-
-    def initialize(id=nil)
-      @id=id
+    def initialize(params)
+      @email = params[:email] || nil
+      @id = params[:id] || nil
+      self.class.headers 'x-auth-key' => token
     end
 
     # CRUD operations
@@ -37,8 +45,9 @@ module Dumbo
       self.call(:post, params)
     end
 
-    def update(params={})
-      self.put(params)
+    def update params={}
+      #Rails.logger.warn params.inspect
+      #self.call(:post, params)
     end
 
     def delete
@@ -46,6 +55,14 @@ module Dumbo
     end
 
     protected
+
+    def token
+      unless @email.nil?
+        Digest::MD5.hexdigest(Digest::SHA1.hexdigest(@email)[4, 25])
+      else
+        nil
+      end
+    end
 
     def get
       self.call(:get)
@@ -74,7 +91,7 @@ module Dumbo
 
     def validate_required_params params={}
       required_params.each do |par|
-        raise ArgumentError unless params.keys.include? par.to_s
+        raise ArgumentError unless params.keys.include? par
       end
     end
 
@@ -87,10 +104,17 @@ module Dumbo
       if @parent_id
         path = "/#{parent_resource}/#{@parent_id}#{path}"
       end
+      
+      # unless token.nil?
+      #   path += '?' + token
+      # end
+
       path
     end
 
     def call(request=:get, params={})
+      params = { self.class.name.split('::').last.downcase.to_sym => params }
+
       retries = 3
       body = params.any? ? {body: params} : {}
       begin

@@ -1,11 +1,11 @@
 # -*- encoding : utf-8 -*-
 module Dumbo
 
-  autoload :API,      'dumbo/lib/api'
-  autoload :Category, 'dumbo/lib/category'
-  autoload :Document, 'dumbo/lib/document'
-  autoload :Domain,   'dumbo/lib/domain'
-  autoload :Page,     'dumbo/lib/page'
-  autoload :Template, 'dumbo/lib/template'
+  autoload :API,      "#{Rails.root}/lib/external/dumbo/lib/api"
+  autoload :Category, "#{Rails.root}/lib/external/dumbo/lib/category"
+  autoload :Document, "#{Rails.root}/lib/external/dumbo/lib/document"
+  autoload :Domain,   "#{Rails.root}/lib/external/dumbo/lib/domain"
+  autoload :Page,     "#{Rails.root}/lib/external/dumbo/lib/page"
+  autoload :Template, "#{Rails.root}/lib/external/dumbo/lib/template"
 
 end # Dumbo
