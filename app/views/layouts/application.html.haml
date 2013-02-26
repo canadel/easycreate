@@ -11,7 +11,7 @@
     = csrf_meta_tags
   %body{class: "#{controller.controller_name}"}
     .container
-      .span16.top_logo.bordered
+      .span16.top_logo
         =link_to(image_tag('logo.png', title: 'Dumbo EaseCreate homepage'), root_url)
       =render 'shared/menu'
 

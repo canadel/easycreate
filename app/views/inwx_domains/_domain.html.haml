@@ -7,8 +7,8 @@
     = domain.dumbo_state
   %td
     - if domain.dumbo_binary_state
-      = link_to "deactivate Dumbo for this domain", domain_deactivate_dumbo_path(domain), :remote => true
+      = link_to "deactivate Dumbo for this domain", domain_deactivate_dumbo_path(domain), :remote => true, :class => 'animated'
     - else
-      = link_to "activate Dumbo for this domain", domain_activate_dumbo_path(domain), :remote => true
+      = link_to "activate Dumbo for this domain", domain_activate_dumbo_path(domain), :remote => true, :class => 'animated'
   %td
-    = link_to "update domain details", domain_update_path(domain, :update_view => true), :remote => true
+    = link_to "update domain details", domain_update_path(domain, :update_view => true), :remote => true, :class => 'animated'
