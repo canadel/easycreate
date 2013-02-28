@@ -1,3 +1,4 @@
+<script>
 $(document).ready(function() {
 
   var errorTimeout = setTimeout(function() {
@@ -20,6 +21,7 @@ $(document).ready(function() {
         tbody += '<td>' + val.name + '</td>';
         tbody += '<td>' + val.title + '</td>';
         tbody += '<td>' + val.description + '</td>';
+        tbody += '<td>' + val.template.name + '</td>';
         tbody += '<td><a href="' + editPath + '/' + val.id + '/edit">Edit</a></td>';
         tbody += '</tr>';
     });
@@ -31,3 +33,4 @@ $(document).ready(function() {
 
 
 });
+</script>

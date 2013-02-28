@@ -1,0 +1,78 @@
+//= require bootstrap
+//= require_self
+//= require_tree . 
+
+a {
+  color: #457bb9;
+}
+
+.top_logo {
+  height: 120px;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+.top_logo img {
+  margin-top: 50px;
+}
+
+.bordered {
+  border-bottom: 1px dashed #c4c4c4;
+  margin-bottom: 10px;
+}
+
+.menu a {
+  color: #186f8a;
+}
+
+.menu.first {
+  padding-bottom: 10px;
+}
+
+.menu.second {
+  margin-bottom: 30px;
+}
+
+.menu-item {
+  float: left;
+  border-left: 1px solid #c4c4c4;
+  padding: 0 10px;
+}
+
+.menu-item.first {
+  border: 0;
+  padding-left: 0;
+}
+
+.clear {
+  clear: both;
+}
+
+.topspace20 {
+  margin-top: 20px;
+}
+
+.centered {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.preview_template {
+  margin-bottom: 30px;
+}
+
+.preview_template h4 {
+  font-size: 14px;
+  border-bottom: 1px solid #c4c4c4;
+  margin-bottom: 8px;
+}
+
+.template-selected > img {
+  border: 3px solid #186f8a;
+}
+
+.thumbnail {
+  text-align: center;
+}
+

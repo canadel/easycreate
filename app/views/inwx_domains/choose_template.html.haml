@@ -1,0 +1,8 @@
+%h1 Choose Template
+
+#content
+  #templates{ :class => 'container',  :data => { :api => api_url('templates'), :params => api_params, :redirect => domains_url } }
+    Loading...
+  .actions
+    = link_to 'Submit', '#', :class => 'btn primary', :id => 'change-template'
+= render :partial => 'choose_template.js'

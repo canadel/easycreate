@@ -1,0 +1,69 @@
+<script>
+$(document).ready(function() {
+  var apiUrl    = '<%= api_url('templates') %>'
+  var apiToken  = '<%= api_token %>' 
+  var requestUrl = apiUrl + '?token=' + apiToken + '&callback=?';
+
+  $.getJSON(requestUrl, function(data) {
+    
+    var tbody = '';
+
+    var count = 0;
+
+    $.each(data, function(key, val) {
+      if (count == 0) {
+        tbody += '<div class="row">';
+      }
+
+      tbody += '<div class="span4 thumbnail">';
+      tbody += '<img alt="' + val.name + '" src="' + val.thumbnail + '">';
+      tbody += '<br>' + val.name;
+      tbody += '</div>';
+      
+      count++;
+
+      if (count == 3) {
+        tbody += '</div>';
+        count = 0;
+      }
+    });
+
+
+    $('#templates').html(tbody);
+
+  });
+
+  $('.thumbnail').live('click', function() {
+    $('.thumbnail').each(function() {
+      $(this).removeClass('template-selected');
+    });
+    
+    $(this).addClass('template-selected');
+  });
+
+  submitButton = $('#change-template');
+
+  submitButton.click(function() {
+
+    submitButton.val('Please, wait...');
+
+    var requestData = 'token=' + apiToken + '&' + 'template=' + $('.template-selected > img').attr('alt') + '&domain=' + '<%= @domain.domain %>';
+
+    console.log(requestData);
+
+    $.ajax({
+      url: apiUrl + '/choose',
+      type: 'get',
+      data: requestData,
+      success: function(data) {
+        window.location.href = '<%= domains_path %>'; 
+       }
+     });
+
+    return false;
+  });
+
+
+});
+</script>
+

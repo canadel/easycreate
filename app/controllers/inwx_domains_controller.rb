@@ -93,13 +93,15 @@ class InwxDomainsController < ApplicationController
   
   def update_domains
     begin
-      current_user.inwx_domains.each { |d| update_domain(d.id) }
+      current_user.inwx_domains.each { |d| update_domain(d.id) if d.id > 0 }
     rescue Exception => e
-      flash[:error] = "Could not connect, please check you credentials!"
+      flash[:error] = e.inspect #"Could not connect, please check you credentials!"
       @domains = current_user.inwx_domains
-      render :update_domains
     end
+    
     @domains = current_user.inwx_domains
+    
+    render 'update_domains.js.coffee'
   end
   
   
@@ -109,15 +111,17 @@ class InwxDomainsController < ApplicationController
     @extracted_cname_records = []
     @a_records = domrobot.call('nameserver','info', {:domain => resource.domain, :type => 'A'})
     @cname_records = domrobot.call('nameserver','info', {:domain => resource.domain, :type => 'CNAME'})
+    Rails.logger.warn @a_records.inspect
+    Rails.logger.warn @cname_records.inspect
     #  extracting A Records
-    unless @a_records['resData'].blank?
+    if @a_records && @a_records['resData'] && @a_records['resData']['record']     
       @a_records['resData']['record'].each do |r|
         @extracted_a_records << ARecord.new(:entry => r['content'], :name => r['name'], :inwx_id => r['id']) unless r.blank?
       end
     end
     resource.a_records = @extracted_a_records
     #  extracting CNAME Records
-    unless @cname_records['resData'].blank?
+    if @cname_records && @cname_records['resData'] && @cname_records['resData']['record']     
       @cname_records['resData']['record'].each do |r|
         @extracted_cname_records << CnameRecord.new(:entry => r['content'], :name => r['name'], :inwx_id => r['id']) unless r.blank?
       end
@@ -169,6 +173,10 @@ class InwxDomainsController < ApplicationController
     end
   end
   
+  def choose_template
+    @domain = resource
+  end
+
   private
   # domain api
   def domrobot
