@@ -2,7 +2,7 @@
 $(document).ready(function() {
   var apiUrl    = '<%= api_url('templates') %>'
   var apiToken  = '<%= api_token %>' 
-  var requestUrl = apiUrl + '?token=' + apiToken + '&callback=?';
+  var requestUrl = apiUrl + '?token=' + apiToken + '&domain=<%= @domain.domain %>&callback=?';
 
   $.getJSON(requestUrl, function(data) {
     
@@ -15,7 +15,11 @@ $(document).ready(function() {
         tbody += '<div class="row">';
       }
 
-      tbody += '<div class="span4 thumbnail">';
+      tbody += '<div class="span4 thumbnail'
+      if (val.current) {
+        tbody += ' template-selected';
+      }
+      tbody += '">';
       tbody += '<img alt="' + val.name + '" src="' + val.thumbnail + '">';
       tbody += '<br>' + val.name;
       tbody += '</div>';
