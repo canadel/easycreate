@@ -22,7 +22,7 @@ $(document).ready(function() {
         tbody += '<td>' + val.title + '</td>';
         tbody += '<td>' + val.description + '</td>';
         tbody += '<td>' + val.template.name + '</td>';
-        tbody += '<td><a href="' + editPath + '/' + val.id + '/edit">Edit</a></td>';
+        tbody += '<td><a href="' + editPath + '/' + val.id + '/edit">Edit</a> | <a href="<%= pages_path %>/' + val.id + '/documents">Documents</a></td>';
         tbody += '</tr>';
     });
 

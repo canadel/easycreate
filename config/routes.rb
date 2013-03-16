@@ -11,7 +11,9 @@ DumboEasyCreate::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
-  resources :pages, :only => [:index, :edit, :update]
+  resources :pages, :only => [:index, :edit] do
+    resources :documents, :only => [:index, :new, :edit]
+  end
 
   # resources 'inwx', :only => :index do
   #   collection do

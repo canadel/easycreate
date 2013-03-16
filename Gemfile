@@ -69,6 +69,6 @@ group :test do
   gem 'launchy', '>= 2.0.5'
   gem 'turn', :require => false
   gem 'webmock'
-  gem 'accept_values_for', git: 'https://github.com/bogdan/accept_values_for.git'
+  gem 'accept_values_for', :git => 'https://github.com/bogdan/accept_values_for.git'
 end
 

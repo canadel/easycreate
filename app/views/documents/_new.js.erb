@@ -1,0 +1,30 @@
+<script>
+$(document).ready(function() {
+  var apiUrl    = '<%= api_url('pages') + '/' + params[:page_id] + '/documents/' %>'
+  var apiToken  = '<%= api_token %>'
+  var requestUrl = apiUrl + '?token=' + apiToken + '&callback=?';
+
+  $('textarea#document_content').redactor();
+  
+  submitButton = $('#submit');
+
+  submitButton.click(function() {
+
+    submitButton.val('Please, wait...');
+
+    var requestData = 'token=' + apiToken + '&' + $('#document-form > form').serialize();
+
+    $.ajax({
+      url: apiUrl,
+      type: 'post',
+      data: requestData,
+      success: function(data) {
+        window.location.href = '<%= page_documents_path(params[:page_id]) %>'; 
+      }
+    });
+
+    return false;
+  });
+
+});
+</script>

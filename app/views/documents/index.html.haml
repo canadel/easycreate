@@ -1,0 +1,19 @@
+%h1 My Documents
+
+#content
+  #document-list-status
+    Loading...
+  
+  %table#document-list{ :style => 'display: none' }
+    %thead
+      %tr
+        %th Name
+        %th Slug
+        %th Actions
+    %tbody
+
+  %a.btn.primary{ :href => "#{new_page_document_path}" }
+    New document
+
+= render 'index.js'
+

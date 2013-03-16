@@ -1,0 +1,26 @@
+<script>
+$(document).ready(function() {
+  var apiUrl    = '<%= api_url('pages') + '/' + params[:page_id] + '/documents' %>'
+  var apiToken  = '<%= api_token %>'
+  var requestUrl = apiUrl + '?token=' + apiToken + '&page=<%= params[:id] %>&callback=?';
+
+  $.getJSON(requestUrl, function(data) {
+    
+    var tbody = '';
+
+    $.each(data, function(key, val) {
+        tbody += '<tr>';
+        tbody += '<td>' + val.title + '</td>';
+        tbody += '<td>' + val.slug + '</td>';
+        tbody += '<td><a href="<%= page_documents_path(params[:id]) %>/' + val.id + '/edit">Edit</a></td>';
+        tbody += '</tr>';
+    });
+
+    $('#document-list tbody').html(tbody);
+    $('#document-list-status').fadeOut('slow');
+    $('#document-list').fadeIn('slow');
+  });
+
+
+});
+</script>

@@ -1,0 +1,40 @@
+<script>
+$(document).ready(function() {
+  var apiUrl    = '<%= api_url('pages') + '/' + params[:page_id] + '/documents/' + params[:id] %>'
+  var apiToken  = '<%= api_token %>'
+  var requestUrl = apiUrl + '?token=' + apiToken + '&callback=?';
+
+  
+  $.getJSON(requestUrl, function(data) {
+    
+    $('input#document_title').val(data.title);
+    $('textarea#document_content').val(data.content).redactor();
+    $('#document-form-status').fadeOut('slow');
+    $('#document-form').fadeIn('slow');
+  });
+
+  submitButton = $('#submit');
+
+  submitButton.click(function() {
+
+    submitButton.val('Please, wait...');
+
+    var requestData = 'token=' + apiToken + '&' + $('#document-form > form').serialize();
+
+    $.ajax({
+      url: apiUrl,
+      type: 'post',
+      data: requestData,
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader('X-Http-Method-Override', 'PUT');
+      },
+      success: function(data) {
+        window.location.href = '<%= page_documents_path(params[:page_id]) %>'; 
+      }
+    });
+
+    return false;
+  });
+
+});
+</script>

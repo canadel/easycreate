@@ -1,0 +1,13 @@
+#content
+  #document-form
+    = twitter_bootstrap_form_for 'document' do |f|
+      = f.inputs 'New document' do
+        = f.text_field :title
+        = f.text_field :slug
+        = f.text_area :content
+
+        = f.actions do
+          = f.submit 'Create', :id => 'submit'
+
+= render 'new.js'
+
