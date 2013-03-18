@@ -18,12 +18,43 @@ $(document).ready(function() {
 
     $.each(data, function(key, val) {
         tbody += '<tr>';
-        tbody += '<td>' + val.name + '</td>';
-        tbody += '<td>' + val.title + '</td>';
-        tbody += '<td>' + val.description + '</td>';
-        tbody += '<td>' + val.template.name + '</td>';
-        tbody += '<td><a href="' + editPath + '/' + val.id + '/edit">Edit</a> | <a href="<%= pages_path %>/' + val.id + '/documents">Documents</a></td>';
+        
+        
+        tbody += '<td><b>';
+        
+        if (val.documents.length > 0) {
+          tbody += '<a href="<%= pages_path %>/' + val.id + '/documents" class="doc-toggle" data-doc="doc' + val.id + '">-></a> ';
+        }
+        
+        tbody +=  val.name + '</b></td>';
+        tbody += '<td><b>' + val.title + '</b></td>';
+        tbody += '<td><b>' + val.description + '</b></td>';
+        tbody += '<td><b>' + val.template.name + '</b></td>';
+        tbody += '<td><a href="' + editPath + '/' + val.id + '/edit">Edit</a>';
         tbody += '</tr>';
+
+        if (val.documents.length > 0) {
+          for (var d in val.documents) {
+            tbody += '<tr class="doc' + val.id + '" style="display: none;">';
+            tbody += '<td></td>';
+            tbody += '<td>' + val.documents[d].title + '</td>';
+            tbody += '<td>Document</td>';
+            if (val.documents[d].tpl) {
+              tbody += '<td>' + val.documents[d].tpl.name  + '</td>';
+            } else {
+              tbody += '<td></td>';
+            }
+            tbody += '<td><a href="' + editPath + '/' + val.id + '/documents/' + val.documents[d].id + '/edit">Edit</a>';
+            tbody += '</tr>';
+          }
+        }
+    });
+
+    $('.doc-toggle').live('click', function() {
+      var classId = $(this).data('doc');
+      console.log(classId);
+      $('.' + classId).slideToggle();
+      return false;
     });
 
     $('#page-list tbody').html(tbody);
