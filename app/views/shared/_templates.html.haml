@@ -1,5 +1,5 @@
 = twitter_bootstrap_form_for(:resource, :url  => '/') do |f|
-
+  %input#package{ :name => 'resource[package]', :type => 'hidden', :value => '' }
   .bordered.topspace20
     = f.text_field :project_name, class: 'span8' do
       %span.help-block
@@ -13,40 +13,15 @@
     %p Choose Template:
     
     .row
-      .preview_template.span3
-        =image_tag 'templates/template1.png'  
-        %h4 Blog #1
-        1 Page
-        %br
-        =link_to "+ more info", "#"
+      .preview_template.span3.thumbnail{ :data => { :package => 'auc' } }
+        =image_tag 'templates/template1.png'
+        %h4 AUC
+        3 Pages, 2 Templates
       
-      .preview_template.span3
-        =image_tag 'templates/template2.png'  
-        %h4 Company #A1
-        2 Pages
-        %br
-        =link_to "+ more info", "#"
-
-      .preview_template.span3
-        =image_tag 'templates/template3.png'  
-        %h4 Company #A1.1
-        1 Page
-        %br
-        =link_to "+ more info", "#"
-
-      .preview_template.span3
-        =image_tag 'templates/template4.png'  
-        %h4 Company #C
-        2-6 Pages
-        %br
-        =link_to "+ more info", "#"
-
-      .preview_template.span3
-        =image_tag 'templates/template5.png'  
-        %h4 Portfolio #B1
-        2-6
-        %br
-        =link_to "+ more info", "#"
+      .preview_template.span3.thumbnail{ :data => { :package => 'shift' } }
+        =image_tag 'templates/template2.png'
+        %h4 Shift Foundation
+        2 Pages, 2 Templates
 
     .cleanup
 

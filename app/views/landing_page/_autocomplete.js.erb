@@ -1,0 +1,10 @@
+<script>
+$(function() {
+  var availableDomains = <%= @domains.map{ |v| v.domain }.to_json.html_safe %>;
+  $( "#resource_domain" ).autocomplete({
+    source: availableDomains
+  });
+
+});
+</script>
+

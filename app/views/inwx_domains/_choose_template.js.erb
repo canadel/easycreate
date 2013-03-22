@@ -37,14 +37,6 @@ $(document).ready(function() {
 
   });
 
-  $('.thumbnail').live('click', function() {
-    $('.thumbnail').each(function() {
-      $(this).removeClass('template-selected');
-    });
-    
-    $(this).addClass('template-selected');
-  });
-
   submitButton = $('#change-template');
 
   submitButton.click(function() {
