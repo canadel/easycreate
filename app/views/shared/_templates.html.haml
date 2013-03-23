@@ -8,7 +8,9 @@
     = f.text_field :domain, class: 'span8' do
       %span.help-block
         (e.g. "example.de")
-  
+    = f.toggles do
+      = f.check_box :nameservers, 'Automatically set nameservers', { :checked => true }
+
   .bordered.templates.topspace20
     %p Choose Template:
     

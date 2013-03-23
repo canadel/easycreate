@@ -111,8 +111,6 @@ class InwxDomainsController < ApplicationController
     @extracted_cname_records = []
     @a_records = domrobot.call('nameserver','info', {:domain => resource.domain, :type => 'A'})
     @cname_records = domrobot.call('nameserver','info', {:domain => resource.domain, :type => 'CNAME'})
-    Rails.logger.warn @a_records.inspect
-    Rails.logger.warn @cname_records.inspect
     #  extracting A Records
     if @a_records && @a_records['resData'] && @a_records['resData']['record']     
       @a_records['resData']['record'].each do |r|
