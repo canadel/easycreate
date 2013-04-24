@@ -4,7 +4,7 @@ class LandingPageController < ApplicationController
   
   def index
     @resource=OpenStruct.new
-    @domains = current_user.inwx_domains
+    @domains = current_user ? current_user.inwx_domains : []
     
     if params[:resource]
 
