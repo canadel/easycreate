@@ -94,4 +94,15 @@ class LandingPageController < ApplicationController
 
   end
 
+
+private
+  
+  def domrobot
+    @_domrobot ||= 
+                  INWX::Domrobot.new(ENV['INWX_DOMROBOT']).tap do |robot|
+                    robot.login( current_user.inwx_credential.username, 
+                                 current_user.inwx_credential.password )
+                  end
+  end
+
 end
