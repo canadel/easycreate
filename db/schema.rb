@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111220210619) do
+ActiveRecord::Schema.define(:version => 20130711084210) do
 
   create_table "a_records", :force => true do |t|
     t.integer  "inwx_domain_id"
@@ -44,6 +44,16 @@ ActiveRecord::Schema.define(:version => 20111220210619) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+  end
+
+  create_table "packages", :force => true do |t|
+    t.string   "name"
+    t.string   "label"
+    t.string   "description"
+    t.string   "thumbnail"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

@@ -37,8 +37,8 @@ DumboEasyCreate::Application.routes.draw do
   scope 'inwx' do
     resources :inwx_credentials, :as => 'credentials'
   end
- 
 
+  get 'update/templates' 
   
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

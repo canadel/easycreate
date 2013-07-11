@@ -15,16 +15,13 @@
     %p Choose Template:
     
     .row
-      .preview_template.span3.thumbnail{ :data => { :package => 'auc' } }
-        =image_tag 'templates/template1.png'
-        %h4 AUC
-        3 Pages, 2 Templates
-      
-      .preview_template.span3.thumbnail{ :data => { :package => 'shift' } }
-        =image_tag 'templates/template2.png'
-        %h4 Shift Foundation
-        2 Pages, 2 Templates
+      - @packages.each do |p|
 
+        .preview_template.span3.thumbnail{ :data => { :package => "#{p.name}" } }
+          =image_tag p.thumbnail
+          %h4=p.label
+          =p.description
+      
     .cleanup
 
   .centered.topspace20

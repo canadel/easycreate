@@ -5,7 +5,8 @@ class LandingPageController < ApplicationController
   def index
     @resource=OpenStruct.new
     @domains = current_user ? current_user.inwx_domains : []
-    
+    @packages = Package.order('position ASC')
+
     if params[:resource]
 
       if params[:resource][:domain].blank?
