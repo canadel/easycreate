@@ -2,8 +2,11 @@ class UpdateController < ApplicationController
 
   def templates
 
-    url = 'http://dumbocms.com/api/packages?token=ea9da1d560bbf55b9c40ae5c01c6b95a'
-    packages = JSON.parse(open(url).read)
+    url = URI.parse('http://www.dumbocms.com/api/packages?token=ea9da1d560bbf55b9c40ae5c01c6b95a')
+    
+    content = open(url).read
+
+    packages = JSON.parse(content)
 
     if packages
       
