@@ -15,15 +15,10 @@ class LandingPageController < ApplicationController
         domain = InwxDomain.where(:domain => params[:resource][:domain]).first
         
         if domain.nil?
-          flash[:error] = 'Domain not found'
+          flash[:error] = 'Please fill domain field'
         else
           resource = InwxDomain.where(:domain => params[:resource][:domain], :user_id => current_user.id).first
-
-          if resource.nil?
-            flash[:error] = 'Domain not found, please refresh your domains'
-          else
-            flash[:error] = 'Domain already activated' if resource.dumbo_binary_state
-          end
+          flash[:error] = 'Domain already activated' if resource.dumbo_binary_state
         end
       end
 
@@ -40,7 +35,7 @@ class LandingPageController < ApplicationController
         render 'index'
       else 
         
-        if params[:resource][:nameservers]
+        if resource && params[:resource][:nameservers]
           
           # create or update address record
           if current_user.inwx_domains.find(resource).a_records.where(:entry => "www.#{resource.domain}").exists?
@@ -87,6 +82,8 @@ class LandingPageController < ApplicationController
           template_id: 59,
           _package: params[:resource][:package]
         })
+
+        flash[:notice] = 'Success! You should forward your domaain to new IP 37.235.63.140' if !resource;
 
         redirect_to pages_path
       end
