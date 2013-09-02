@@ -12,14 +12,8 @@ class LandingPageController < ApplicationController
       if params[:resource][:domain].blank?
         flash[:error] = 'Please, type domain name'
       else
-        domain = InwxDomain.where(:domain => params[:resource][:domain]).first
-        
-        if domain.nil?
-          flash[:error] = 'Please fill domain field'
-        else
-          resource = InwxDomain.where(:domain => params[:resource][:domain], :user_id => current_user.id).first
-          flash[:error] = 'Domain already activated' if resource.dumbo_binary_state
-        end
+	resource = InwxDomain.where(:domain => params[:resource][:domain], :user_id => current_user.id).first
+        flash[:error] = 'Domain already activated' if resource && resource.dumbo_binary_state
       end
 
       if params[:resource][:package].blank?
@@ -74,7 +68,7 @@ class LandingPageController < ApplicationController
         
         page_resp = page.create({
           account_id: current_user.id,
-          name: domain.domain,
+          name: params[:resource][:domain],
           title: params[:resource][:project_name],
           description: 'Created with EasyCreate One-Click',
           indexable: 1,
@@ -83,7 +77,7 @@ class LandingPageController < ApplicationController
           _package: params[:resource][:package]
         })
 
-        flash[:notice] = 'Success! You should forward your domaain to new IP 37.235.63.140' if !resource;
+        flash[:error] = 'Success! You should forward your domaain to new IP 37.235.63.140' if !resource;
 
         redirect_to pages_path
       end
