@@ -11,8 +11,10 @@ class LandingPageController < ApplicationController
 
       if params[:resource][:domain].blank?
         flash[:error] = 'Please, type domain name'
+      elsif current_user.nil?
+        flash[:error] = 'You tried to create a new page. To do that, please sign in or create an account first.'
       else
-	resource = InwxDomain.where(:domain => params[:resource][:domain], :user_id => current_user.id).first
+        resource = InwxDomain.where(:domain => params[:resource][:domain], :user_id => current_user.id).first
         flash[:error] = 'Domain already activated' if resource && resource.dumbo_binary_state
       end
 
@@ -77,9 +79,12 @@ class LandingPageController < ApplicationController
           _package: params[:resource][:package]
         })
 
-        flash[:error] = 'Success! You should forward your domaain to new IP 37.235.63.140' if !resource;
-
-        redirect_to pages_path
+        unless page_resp.parsed_response['status'].nil?
+          flash[:error] = 'DumboCMS Auth Failed';
+        else
+          flash[:error] = 'Success! You should forward your domaain to new IP 37.235.63.140' if !resource;
+          redirect_to pages_path
+        end
       end
 
     end

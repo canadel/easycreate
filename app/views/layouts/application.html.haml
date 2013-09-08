@@ -18,9 +18,7 @@
       -if flash[:error]
         .inner
           .alert-message.error
-            %span.btn_close ×
             %p
-              %strong &diams;
               =flash[:error]
               
       = yield
