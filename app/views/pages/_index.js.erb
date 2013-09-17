@@ -30,7 +30,11 @@ $(document).ready(function() {
         tbody += '<td><b>' + val.title + '</b></td>';
         tbody += '<td><b>' + val.description + '</b></td>';
         tbody += '<td><b>' + val.template.name + '</b></td>';
-        tbody += '<td><a href="' + editPath + '/' + val.id + '/edit">Edit</a>';
+        tbody += '<td>';
+        tbody += '<a href="' + editPath + '/' + val.id + '/edit">Edit</a>';
+        tbody += ' / ';
+        tbody += '<a href="#" class="delete-page-action" data-page-id="' + val.id + '">Delete</a>';
+        tbody += '</td>';
         tbody += '</tr>';
 
         if (val.documents.length > 0) {
@@ -44,7 +48,11 @@ $(document).ready(function() {
             } else {
               tbody += '<td></td>';
             }
-            tbody += '<td><a href="' + editPath + '/' + val.id + '/documents/' + val.documents[d].id + '/edit">Edit</a>';
+            tbody += '<td>';
+            tbody += '<a href="' + editPath + '/' + val.id + '/documents/' + val.documents[d].id + '/edit">Edit</a>';
+            tbody += ' / ';
+            tbody += '<a href="#" class="delete-document-action" data-page-id="' + val.id + '" data-document-id="' + val.documents[d].id + '">Delete</a>';
+            tbody += '</td>';
             tbody += '</tr>';
           }
         }
@@ -52,9 +60,40 @@ $(document).ready(function() {
 
     $('.doc-toggle').live('click', function() {
       var classId = $(this).data('doc');
-      console.log(classId);
       $('.' + classId).slideToggle();
       return false;
+    });
+
+    $('.delete-page-action, .delete-document-action').live('click', function() {
+
+      result = confirm('Are you sure?');
+
+      if (result) {
+
+        var requestUrl = 'http://www.dumbocms.com/api/pages/' + $(this).data('page-id');
+
+        if ($(this).hasClass('delete-document-action')) {
+          requestUrl += '/documents/' + $(this).data('document-id');
+        }
+
+        requestUrl += '?' + $('#page-list').data('params'); 
+        
+        $.ajax({
+          url: requestUrl,
+          type: 'post',
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-Http-Method-Override', 'DELETE');
+          },
+          success: function(data) {
+            window.location.href = '/pages'; 
+          },
+          error: function(data) {
+            window.location.href = '/pages';
+          }
+        });
+        
+      }
+
     });
 
     $('#page-list tbody').html(tbody);
