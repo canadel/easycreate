@@ -19,7 +19,8 @@ $(document).ready(function() {
     $.each(data, function(key, val) {
         tbody += '<tr>';
         
-        
+        console.log(val);
+
         tbody += '<td><b>';
         
         if (val.documents.length > 0) {
@@ -31,6 +32,8 @@ $(document).ready(function() {
         tbody += '<td><b>' + val.description + '</b></td>';
         tbody += '<td><b>' + val.template.name + '</b></td>';
         tbody += '<td>';
+        tbody += '<a href="http://' + val.name + '" target="_blank">Preview</a>';
+        tbody += ' / ';
         tbody += '<a href="' + editPath + '/' + val.id + '/edit">Edit</a>';
         tbody += ' / ';
         tbody += '<a href="#" class="delete-page-action" data-page-id="' + val.id + '">Delete</a>';
@@ -49,6 +52,8 @@ $(document).ready(function() {
               tbody += '<td></td>';
             }
             tbody += '<td>';
+            tbody += '<a href="http://' + val.name + val.documents[d].links[0].path + '">Preview</a>';
+            tbody += ' / ';
             tbody += '<a href="' + editPath + '/' + val.id + '/documents/' + val.documents[d].id + '/edit">Edit</a>';
             tbody += ' / ';
             tbody += '<a href="#" class="delete-document-action" data-page-id="' + val.id + '" data-document-id="' + val.documents[d].id + '">Delete</a>';
