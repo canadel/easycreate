@@ -32,7 +32,9 @@ $(document).ready(function() {
         tbody += '<td><b>' + val.description + '</b></td>';
         tbody += '<td><b>' + val.template.name + '</b></td>';
         tbody += '<td>';
-        tbody += '<a href="http://' + val.name + '" target="_blank">Preview</a>';
+        tbody += '<a href="http://' + val.name + '" target="_blank">to Domain</a>';
+        tbody += ' / ';
+        tbody += '<a href="http://dumbocms.com/preview/' + val.id + '" target="_blank">Preview</a>';
         tbody += ' / ';
         tbody += '<a href="' + editPath + '/' + val.id + '/edit">Edit</a>';
         tbody += ' / ';
@@ -52,7 +54,9 @@ $(document).ready(function() {
               tbody += '<td></td>';
             }
             tbody += '<td>';
-            tbody += '<a href="http://' + val.name + val.documents[d].links[0].path + '" target="_blank">Preview</a>';
+            tbody += '<a href="http://' + val.name + val.documents[d].links[0].path + '" target="_blank">to Domain</a>';
+            tbody += ' / ';
+            tbody += '<a href="http://dumbocms.com/preview/' + val.id + '/' + val.documents[d].id + '" target="_blank">Preview</a>';
             tbody += ' / ';
             tbody += '<a href="' + editPath + '/' + val.id + '/documents/' + val.documents[d].id + '/edit">Edit</a>';
             tbody += ' / ';
