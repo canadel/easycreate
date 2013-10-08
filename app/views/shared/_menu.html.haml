@@ -1,6 +1,6 @@
 .menu.first.bordered
   - if user_signed_in?
-    .menu-item.first= link_to "Edit my INWX Credentials", edit_credential_path(current_user.inwx_credential.id)
+    .menu-item.first= link_to "Settings", edit_credential_path(current_user.inwx_credential.id)
     .menu-item= link_to "My Domains", domains_path
     .menu-item= link_to "My Pages", pages_path
     .menu-item= link_to "Logout", destroy_user_session_path
