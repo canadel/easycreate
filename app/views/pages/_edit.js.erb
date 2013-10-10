@@ -26,7 +26,7 @@ $(document).ready(function() {
 
     submitButton.val('Please, wait...');
 
-    var requestData = 'token=' + apiToken + '&' + $('#page-form > form').serialize();
+    var requestData = 'token=' + apiToken + '&markup=markdown&' + $('#page-form > form').serialize();
 
     $.ajax({
       url: apiUrl,
