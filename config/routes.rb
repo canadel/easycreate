@@ -38,7 +38,8 @@ DumboEasyCreate::Application.routes.draw do
     resources :inwx_credentials, :as => 'credentials'
   end
 
-  get 'update/templates' 
+  get 'update/templates'
+  post 'upload/image'
   
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

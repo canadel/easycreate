@@ -8,7 +8,7 @@ $(document).ready(function() {
   $.getJSON(requestUrl, function(data) {
     
     $('input#document_title').val(data.title);
-    $('textarea#document_content').val(data.content).redactor();
+    $('textarea#document_content').val(data.content).redactor({ imageUpload: '/upload/image' });
     $('#document-form-status').fadeOut('slow');
     $('#document-form').fadeIn('slow');
   });
