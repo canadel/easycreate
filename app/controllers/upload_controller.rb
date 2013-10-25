@@ -1,5 +1,7 @@
 class UploadController < ApplicationController
 
+  protect_from_forgery :except => :image 
+
   def image
     if params[:file]
       uploaded_io = params[:file]
