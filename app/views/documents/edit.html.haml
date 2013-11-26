@@ -6,6 +6,8 @@
       = f.inputs 'Edit my document' do
         = f.text_field :title
         = f.text_area :content
+        = f.text_field :latitude
+        = f.text_field :longitude
         = f.actions do
           = f.submit 'Update', :id => 'submit'
           %a{ :href => "http://dumbocms.com/admin/documents/#{params[:id]}/edit", :class => 'btn btn-primary' } Edit on DumboCMS 

@@ -9,6 +9,8 @@ $(document).ready(function() {
     
     $('input#document_title').val(data.title);
     $('textarea#document_content').val(data.content).redactor({ imageUpload: '/upload/image' });
+    $('input#document_latitude').val(data.latitude);
+    $('input#document_longitude').val(data.longitude);
     $('#document-form-status').fadeOut('slow');
     $('#document-form').fadeIn('slow');
   });
