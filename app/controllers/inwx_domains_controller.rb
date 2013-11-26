@@ -6,7 +6,8 @@ class InwxDomainsController < ApplicationController
   end
   
   def activate_dumbo
-    
+   
+
     # create or update address record
     if current_user.inwx_domains.find(resource).a_records.where(:entry => "www.#{resource.domain}").exists?
       unless current_user.inwx_domains.find(resource).a_records.where(:name => "www.#{resource.domain}").first.eql?(ENV['DUMBO_IP'])
@@ -19,7 +20,8 @@ class InwxDomainsController < ApplicationController
                      )
       end
     else
-      domrobot.call('nameserver','createRecord', {:domain => resource.domain, :type => 'A', :content => ENV['DUMBO_IP'], :name => ''})
+      domrobot.call('nameserver', 'delete', { :domain => resource.domain })
+      domrobot.call('nameserver', 'createRecord', {:domain => resource.domain, :type => 'A', :content => ENV['DUMBO_IP'], :name => ''})
     end
 
     # create or update cname record
@@ -34,7 +36,8 @@ class InwxDomainsController < ApplicationController
                      )
       end
     else
-      domrobot.call('nameserver','createRecord', {:domain => resource.domain, :type => 'CNAME', :content => "#{resource.domain}", :name => 'www'})
+      domrobot.call('nameserver', 'delete', { :domain => "www.#{resource.domain}" })
+      domrobot.call('nameserver', 'createRecord', {:domain => resource.domain, :type => 'CNAME', :content => "#{resource.domain}", :name => 'www'})
     end
     
     # create page and domain
