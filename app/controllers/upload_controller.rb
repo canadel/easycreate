@@ -23,7 +23,7 @@ class UploadController < ApplicationController
 
   def favicon
     Favicon.save(params[:favicon], params[:domain])
-    redirect_to root_path
+    redirect_to inwx_domains_path
   end
 
 end
