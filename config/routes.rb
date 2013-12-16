@@ -39,7 +39,9 @@ DumboEasyCreate::Application.routes.draw do
   end
 
   get 'update/templates'
+  get 'upload/index'
   post 'upload/image'
+  post 'upload/favicon'
   
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

@@ -2,6 +2,9 @@ class UploadController < ApplicationController
 
   protect_from_forgery :except => :image 
 
+  def index
+  end
+
   def image
     if params[:file]
       uploaded_io = params[:file]
@@ -16,6 +19,11 @@ class UploadController < ApplicationController
     else
       render :text => 'Error', :status => 500
     end
+  end
+
+  def favicon
+    post = Favicon.save(params[:upload])
+    redirect_to root_path
   end
 
 end
