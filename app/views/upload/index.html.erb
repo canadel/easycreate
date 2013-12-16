@@ -1,5 +1,6 @@
 <h1>Favicon Upload</h1>
 <%= form_tag({action: :favicon}, multipart: true) do %>
+    <%= text_field_tag 'domain' %>
     <%= file_field_tag 'favicon' %>
     <%= submit_tag 'Upload' %>
 <% end %>

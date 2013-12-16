@@ -39,7 +39,7 @@ DumboEasyCreate::Application.routes.draw do
   end
 
   get 'update/templates'
-  get 'upload/index'
+  get 'upload' => 'upload#index'
   post 'upload/image'
   post 'upload/favicon'
   

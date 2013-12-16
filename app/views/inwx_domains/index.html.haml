@@ -1,6 +1,7 @@
 .menu.second
   .menu-item.first= link_to "Get domains", get_domains_domains_path, :remote => true
   .menu-item= link_to "Update status for all Domains", update_all_domains_path, :remote => true
+  .menu-item= link_to "Upload favicon", :controller => :upload, :action => :index
   .clear
 
 %h1 My InwxDomains
