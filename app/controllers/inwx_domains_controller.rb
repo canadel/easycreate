@@ -1,8 +1,8 @@
 class InwxDomainsController < ApplicationController
   
   before_filter :authenticate_user!
-  
-  def index   
+
+  def index
   end
   
   def activate_dumbo
@@ -109,7 +109,9 @@ class InwxDomainsController < ApplicationController
   
   
   def update_domain(domain_id = params[:domain_id], update_view = params[:update_view])
-    
+
+    resource = InwxDomain.find(domain_id)
+
     @extracted_a_records = []
     @extracted_cname_records = []
     @a_records = domrobot.call('nameserver','info', {:domain => resource.domain, :type => 'A'})
@@ -128,6 +130,11 @@ class InwxDomainsController < ApplicationController
       end
     end
     resource.cname_records = @extracted_cname_records
+
+    logger.warn dumbo_domains.inspect
+
+    resource.status = (dumbo_domains.include?(resource.domain)) ? true : false;
+    resource.save
 
     unless update_view.blank?
         respond_to do |format|
@@ -186,6 +193,21 @@ class InwxDomainsController < ApplicationController
                     robot.login( current_user.inwx_credential.username, 
                                  current_user.inwx_credential.password )
                   end
+  end
+
+  def dumbo_domains
+    unless @_domains
+      api_domain = Dumbo::Domain.new :email => current_user.email
+      api_resp = api_domain.index
+
+      @_domains = []
+
+      api_resp.parsed_response.each do |d|
+        @_domains.push(d['name']) if d
+      end
+    end
+
+    @_domains
   end
 
   # domain

@@ -5,8 +5,13 @@ class InwxDomain < ActiveRecord::Base
   has_many  :cname_records, :dependent => :destroy
   
   def dumbo_state
-    if dumbo_binary_state
+
+    if self.status && self.dumbo_binary_state
       "Dumbo activated"
+    elsif self.status
+      "Nameserves not set"
+    elsif self.dumbo_binary_state
+      "Dumbo not set"
     else
       "Dumbo not activated"
     end
