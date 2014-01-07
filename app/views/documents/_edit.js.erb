@@ -4,13 +4,27 @@ $(document).ready(function() {
   var apiToken  = '<%= api_token %>'
   var requestUrl = apiUrl + '?token=' + apiToken + '&callback=?';
 
+ console.log(requestUrl);
   
   $.getJSON(requestUrl, function(data) {
-    
-    $('input#document_title').val(data.title);
-    $('textarea#document_content').val(data.content).redactor({ imageUpload: '/upload/image' });
-    $('input#document_latitude').val(data.latitude);
-    $('input#document_longitude').val(data.longitude);
+
+    var cats = '<option value=""></option>';
+
+    for (var i in data.cats) {
+       cats += '<option value="' + data.cats[i].id + '"';
+
+       if (data.document.category_id && data.document.category_id == data.cats[i].id) {
+           cats += ' selected="selected"';
+       }
+
+       cats += '>' + data.cats[i].name + '</option>';
+    }
+
+    $('select#document_category').html(cats);
+    $('input#document_title').val(data.document.title);
+    $('textarea#document_content').val(data.document.content).redactor({ imageUpload: '/upload/image' });
+    $('input#document_latitude').val(data.document.latitude);
+    $('input#document_longitude').val(data.document.longitude);
     $('#document-form-status').fadeOut('slow');
     $('#document-form').fadeIn('slow');
   });
