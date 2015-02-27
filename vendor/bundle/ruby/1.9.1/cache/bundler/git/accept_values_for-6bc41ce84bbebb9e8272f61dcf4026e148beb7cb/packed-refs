@@ -1,0 +1,13 @@
+# pack-refs with: peeled 
+e40ac5563b2c73241805fdfbcd4d613e013b9bc0 refs/tags/v0.5.0
+08e90a1080a7dcc0feae74b323c5186c562756e7 refs/tags/v0.4.4
+af688ec16a43386f84b8ec0d6455729d1e097f52 refs/tags/v0.4.3
+8efc8c2b657262418ee1ba640dd744b7ff9e9a00 refs/tags/v0.4.2
+d3fa10f0a9f3488d13cd71af8f94ab6a4664673a refs/tags/v0.4.1
+926eafbed47b15eaaaa4ffc98083ab682df40925 refs/tags/v0.4.0
+926eafbed47b15eaaaa4ffc98083ab682df40925 refs/tags/v0.3.1
+e991b1f744378ec64006cff266378b3e04fe4c6d refs/tags/v0.3.0
+206536da743cf7f877425936d86da8106c88a71b refs/tags/v0.2.1
+7e8576b8806833a52d980de63e1323967f66d3b1 refs/heads/rails3
+e40ac5563b2c73241805fdfbcd4d613e013b9bc0 refs/heads/master
+7e8576b8806833a52d980de63e1323967f66d3b1 refs/heads/deepj
